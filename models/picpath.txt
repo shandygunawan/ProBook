@@ -1,0 +1,5 @@
+/asset/book_img/iammywife.jpg
+/asset/book_img/opm.jpg
+/asset/book_img/kaorided.jpg
+/asset/book_img/youjosenki.jpg
+/asset/book_img/yamatot.jpg
