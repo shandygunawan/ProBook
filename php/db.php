@@ -21,7 +21,6 @@
 		private function runQuery($query, $param_binding) {
 			try {
 				$stmt = $this->prepareQuery($query);
-				// $stmt->execute(array_values((array)$param_binding));
 				$stmt->execute(((array)$param_binding));
 				$result = $stmt->fetchAll(PDO::FETCH_OBJ);
 				return $result;

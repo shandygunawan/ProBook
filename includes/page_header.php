@@ -20,7 +20,10 @@
 	<tr>
 		<td style="background-color: #00AEEF">
 			<a href="?browse" class="title">
-				WeaBook
+				<span style="color:#F2D800">
+				Pro 
+				</span>
+				- Book
 			</a>
 		</td>
 		<td style="background-color: #00AEEF">
