@@ -1,16 +1,13 @@
 <?php
 	
-	include("script.php");
-	include("db.php");
-	
-	$dbHandler = new Database("localhost", "root", "", $dbName);
+	include_once("script.php");
 
 	$field = $_POST['field'];
 	$value = $_POST['query'];
 
 	//check username
 	if($field == "username") {
-		if(strlen($value) < 21 && $value != "" && count($dbHandler->getUserIDByUsername($value)) == 0) {
+		if(strlen($value) < 21 && $value != "" && count($db_handler->getUserIDByUsername($value)) == 0) {
 			echo "valid";
 		}
 		// cek database untuk username
@@ -21,7 +18,7 @@
 
 	//check email
 	if($field == "email"){
-		if(filter_var($value, FILTER_VALIDATE_EMAIL) && count($dbHandler->getUserIDByEmail($value)) == 0) {
+		if(filter_var($value, FILTER_VALIDATE_EMAIL) && count($db_handler->getUserIDByEmail($value)) == 0) {
 			echo "valid";
 		}
 		else {

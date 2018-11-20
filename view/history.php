@@ -1,13 +1,14 @@
 <?php
 	
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
 	
-	check_cookie();
+	if(!checkActiveUser()) {
+		clearAllCookies();
+		header('Location: '. "login.php");
+	}
 	
-	$user_id = $_COOKIE["id"];
-	$db = new Database("localhost", "root", "", $dbName);
-	$list_of_order = $db->getBookOrder($user_id);
+	$user_id = $_COOKIE["user_id"];
+	$list_of_order = $db_handler->getBookOrder($user_id);
 	console_log($list_of_order);
 
 	function cprint($string) {

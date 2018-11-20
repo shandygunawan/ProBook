@@ -1,16 +1,17 @@
 <?php
 	
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
 
-	check_cookie();
+	if(!checkActiveUser()) {
+		clearAllCookies();
+		header('Location: '. "login.php");
+	}
 
 	if($_POST['search_bar'] != null){
 		$book_name = $_POST['search_bar'];
 		console_log($book_name);
 		
-		$dbHandler = new Database("localhost", "root", "", $dbName);
-		$list_of_books = $dbHandler->findBookByTitle($book_name);
+		$list_of_books = $db_handler->findBookByTitle($book_name);
 		console_log($list_of_books);	
 	}
 ?>

@@ -1,7 +1,10 @@
 <?php
-	
-	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	check_cookie();
+	include_once($_SERVER['DOCUMENT_ROOT']."/php/script.php");
+
+	if(!checkActiveUser()) {
+		clearAllCookies();
+		header('Location: '. "login.php");
+	}
 ?>
 
 <!DOCTYPE html>

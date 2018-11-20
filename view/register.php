@@ -1,7 +1,6 @@
 <?php
 	
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
 
 	if(isset($_COOKIE["id"]) != null){
 		console_log("Cookie detected");
@@ -15,6 +14,7 @@
 	
 	if(isset($_POST["RegisterButton"])) {
 
+		/* SET NEW USER */
         $user = new stdClass;
         $user->Name = $_POST["name"];
         $user->Username = $_POST["username"];
@@ -24,13 +24,18 @@
         $user->PhoneNumber = $_POST["phone_number"];
         $user->PicturePath = "/asset/user_img/default.jpg";
 
-        $dbHandler = new Database("localhost", "root", "", $dbName);
+        /* ADD USER TO DB */
         $dbHandler->addNewUser($user);
 
+        /* GET USER'S ID */
         $id = $dbHandler->getUserIDByUsername($_POST["username"]);
 
-        setcookie("id", $id[0]->UserID, time() + 3600);
-        setcookie("username", $_POST["username"], time() + 3600);
+	    /* SET ACCESS TOKEN */
+	    assignToken($id[0]->UserID);
+
+        /* SET COOKIE */
+        assignCookies($id[0]->UserID, $_POST["username"]);
+
         header("Location:". "search.php");
 	}
 	

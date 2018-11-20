@@ -1,0 +1,2 @@
+client key: 1001089679311-4icnt83g9j7r755j5iatjpqvu6s21b9d.apps.googleusercontent.com
+client secret: qsuQmyLNoChYbiAyP0ChXZpK

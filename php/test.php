@@ -1,15 +1,42 @@
 <?php
-	
-	include("db.php");
+
+	// IGNORE THIS PAGE!!!
+	// ONLY FOR FUNCTIONALITIES TESTING PURPOSE
 	include("script.php");
 
-	console_log(date("Y-m-d"));
+	console_log($_COOKIE['user_id']);
+	console_log($_COOKIE['username']);
+	console_log($_COOKIE['token_id']);
 
-	$dbHandler = new Database("localhost", "root", "", $dbName);
+	/*
+	console_log(date("Y-m-d");
 
-	$order_id = $dbHandler->getBookOrder(2);
 	
-	console_log($_SESSION['orderID']);
+	date_default_timezone_set("Asia/Jakarta");
+	$dt = new DateTime();
+	echo $dt->format("Y-m-d H:i:s");
+	$dt->modify("+10 seconds");
+	echo $dt->format("Y-m-d H:i:s");
+	*/
+	/*
+	$token = new stdClass;
+    $token->TokenID = generateToken(10);
+    $token->ExpiryTime = $dt->format("Y-m-d H:i:s");
+    $token->Browser = getBrowser();
+    $token->IpAddress = getIPAddress();
+    $token->UserID = 1;
+    $dbHandler->addToken($token);
+    */
+
+    console_log($dbHandler->getAllToken());
+
+    foreach($dbHandler->getAllToken() as $token){
+    	$dtcheck = new DateTime();
+    	if($token->ExpiryTime < date("Y-m-d h:i:sa")) {
+    		$dbHandler->deleteTokenByID($token->TokenID);
+    	}
+    }
+
 
 	// console_log($output);
 
@@ -41,6 +68,5 @@
 	// else {
 	// 	echo "Username not found";
 	// }
-
-
 ?>
+

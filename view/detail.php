@@ -1,18 +1,18 @@
 <?php
-
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
 
-	check_cookie();
+	if(!checkActiveUser()) {
+		clearAllCookies();
+		header('Location: '. "login.php");
+	}
 
 	if($_GET['id'] != null){
 		$book_id = $_GET['id'];
 		
-		$dbHandler = new Database("localhost", "root", "", $dbName);
-		$book_array = $dbHandler->findBookByID($book_id);
+		$book_array = $db_handler->findBookByID($book_id);
 		$book_info = $book_array[0];
 
-		$review_array = $dbHandler->getReviewOnBook($book_info->BookID);
+		$review_array = $db_handler->getReviewOnBook($book_info->BookID);
 	}
 ?>
 

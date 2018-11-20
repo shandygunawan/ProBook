@@ -1,13 +1,13 @@
 <?php
 
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
 
-	check_cookie();
-
-	$dbHandler = new Database("localhost", "root", "", $dbName);
+	if(!checkActiveUser()) {
+		clearAllCookies();
+		header('Location: '. "login.php");
+	}
 	
-	$user_array = $dbHandler->getUserByID($_COOKIE["id"]);
+	$user_array = $db_handler->getUserByID($_COOKIE["user_id"]);
 	$user_info = $user_array[0];
 	console_log($user_info);
 

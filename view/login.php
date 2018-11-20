@@ -1,13 +1,9 @@
 <?php
 	
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
 
-
-	if(isset($_COOKIE["id"])){
-		console_log("Cookie detected");
-		console_log("Cookie id :" + $_COOKIE["id"]);
-		console_log("Cookie username :" + $_COOKIE["username"]);
+	/* Check if Cookie is exist and access token is valid (User is active) */
+	if(checkActiveUser()){
 		header('Location: '. "search.php");
 	}
 	else {
@@ -15,17 +11,19 @@
 	}
 
 
+	/* Check if user has login */
 	if(isset($_POST["LoginButton"])) {
 		if(isset($_POST["username"]) && isset($_POST["password"])){
-			$username = $_POST["username"];
-			$password = $_POST["password"];
-			$dbHandler = new Database("localhost", "root", "", $dbName);
+		  
+		    /* SET ACCESS TOKEN */
+		    $id = $db_handler->getUserIDByUsername($_POST["username"]);
+		    assignToken($id[0]->UserID);
 
-		    $id = $dbHandler->getUserIDByUsername($username);
+		    /* SET COOKIES */
+		    assignCookies($id[0]->UserID, $_POST["username"]);
 
-		    setcookie("id", $id[0]->UserID, time() + 3600);
-		    setcookie("username", $username, time() + 3600);
 		    header('Location: '. "search.php");
+
 		}
 		else {
 			console_log("not isset");	
@@ -47,6 +45,8 @@
 </head>
 
 <body>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<meta name="google-signin-client_id" content="1001089679311-4icnt83g9j7r755j5iatjpqvu6s21b9d.apps.googleusercontent.com">
 	<div class="rectLogin fadeIn">
 	<form method="post">
 			<table class="center" style="width:100%">
@@ -71,6 +71,8 @@
 		<p></p>
 		<input type="submit" value="LOGIN" class="buttonStyleOrange" name="LoginButton" id="LoginButton" onclick="return checkLoginForm()" style="margin:0 auto;display:block;">
 	</form>
+	<br>
+	<div class="g-signin2" data-onsuccess="onSignIn" align="center"></div>
 	</div>
 
 </body>

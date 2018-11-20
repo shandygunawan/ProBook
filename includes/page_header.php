@@ -1,7 +1,8 @@
 <?php
 
 	if(isset($_GET["logout"])) {
-		setcookie("id", null, time()-3600);
+		$db_handler->deleteTokenByID($_COOKIE['token_id']);
+		clearAllCookies();
 		header("Location: "."login.php");
 	}
 	else if(isset($_GET["browse"])) {
@@ -16,6 +17,7 @@
 ?>
 
 <?php require($_SERVER['DOCUMENT_ROOT']."/includes/head.php"); ?>
+<script src="../js/validation.js"></script>
 <table style="width:100%; border-collapse: collapse;">
 	<tr>
 		<td style="background-color: #00AEEF">
@@ -33,7 +35,7 @@
 		</td>
 		<td style="background-color: #F26600; width:35px">
 			<a href="?logout">
-				<img src="../asset/power_button.png" alt="Log out" name="power_button" id="power_button" class="logOutButton">
+				<img src="../asset/power_button.png" alt="Log out" name="power_button" id="power_button" class="logOutButton" onclick="signOut()">
 			</a>	
 		</td>
 	</tr>

@@ -5,6 +5,7 @@
 		private $userTable = "User";
 		private $reviewTable = "BookOrder";
 		private $orderTable = "BookOrder";
+		private $tokenTable = "AccessToken";
 		private $userPicPath = "/asset/user_img/";
 		private $bookPicPath = "/asset/book_img/";
 
@@ -60,6 +61,12 @@
 			$this->runQuery($query, $order);
 		}
 
+		// Add new token
+		public function addToken($token) {
+			$query = "INSERT INTO $this->tokenTable VALUES(:TokenID, :ExpiryTime, :Browser, :IpAddress, :UserID);";
+			$this->runQuery($query, $token);
+		}
+
 		// =========================================================
 		// 						READ
 		// =========================================================
@@ -96,6 +103,24 @@
 			$query = "SELECT * FROM $this->userTable WHERE UserID = ?;";
 			
 			return $this->runQuery($query, [$user_id]);
+		}
+
+		// Get all access token
+		public function getAllToken(){
+			$query = "SELECT * FROM $this->tokenTable;";
+			return $this->runQuery($query, "");
+		}
+
+		// Get token by ID
+		public function getTokenByID($token_id){
+			$query = "SELECT * FROM $this->tokenTable WHERE TokenID = ?;";
+			return $this->runQuery($query, [$token_id]);	
+		}
+
+		// Get token by UserID
+		public function getTokenByUserID($user_id){
+			$query = "SELECT * FROM $this->tokenTable WHERE UserID = ?;";
+			return $this->runQuery($query, [$user_id]);		
 		}
 
 		// Find book with ID
@@ -152,5 +177,10 @@
 		// =========================================================
 		// 						DELETE
 		// =========================================================
+		public function deleteTokenByID($token_id){
+			$query = "DELETE FROM $this->tokenTable WHERE TokenID = ?;";
+
+			$this->runQuery($query, [$token_id]);
+		}
 	}
 ?>

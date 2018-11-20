@@ -1,16 +1,13 @@
 <?php
 
-	include("script.php");
-	include("db.php");
-	
-	$dbHandler = new Database("localhost", "root", "", $dbName);
+	include_once("script.php");
 
 	$username = $_POST['username'];
 	$password = $_POST['password'];
 
 
-	if(count($dbHandler->getUserIDByUsername($username)) == 1) {
-		$passwordCheck = $dbHandler->getPasswordByUsername($username);
+	if(count($db_handler->getUserIDByUsername($username)) == 1) {
+		$passwordCheck = $db_handler->getPasswordByUsername($username);
 		if($password === $passwordCheck[0]->Password){
 			echo "valid";
 

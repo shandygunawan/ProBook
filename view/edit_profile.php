@@ -1,10 +1,11 @@
 <?php
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
-	check_cookie();
-	$dbHandler = new Database("localhost", "root", "", $dbName);
+	if(!checkActiveUser()) {
+		clearAllCookies();
+		header('Location: '. "login.php");
+	}
 	
-	$user_array = $dbHandler->getUserByID($_COOKIE["id"]);
+	$user_array = $db_handler->getUserByID($_COOKIE["id"]);
 	$user_info = $user_array[0];
 	console_log($user_info);
 	
@@ -62,7 +63,7 @@
 			</tr>
 			<tr>
 				<td>Phone Number</td>
-				<td style="width:300px"><input type="text" style="width:70%" value="<?php echo $user_info->PhoneNumber; ?>" name="phone_number" id="phone_number" onblur="validatePhoneNumber(this.value)"></td>
+				<td style="width:300px"><input type="text" style="width:70%" value="<?php echo $user_info->PhoneNumber; ?>" name="phone_number" id="phone_number" onkeyup="validatePhoneNumber(this.value)"></td>
 				<td style="width: 10px;height: 10px"> <div id="phone_number_check_icon"></div> </td>			
 			</tr>
 		</table>	
