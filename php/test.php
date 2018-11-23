@@ -4,9 +4,27 @@
 	// ONLY FOR FUNCTIONALITIES TESTING PURPOSE
 	include("script.php");
 
-	console_log($_COOKIE['user_id']);
-	console_log($_COOKIE['username']);
-	console_log($_COOKIE['token_id']);
+	require_once("./nusoap-0.9.5/lib/nusoap.php");
+
+	//This is your web service server WSDL URL address
+	$wsdl = "http://localhost:4789/services/search?wsdl";
+
+	// Create a client object
+	$client = new nusoap_client($wsdl, 'wsdl');
+	$err = $client->getError();
+
+	if($err){
+		// Display the error
+		echo "<h2>Constructor error</h2>". $err;
+		exit();
+	}
+
+	// call the method
+	$result = $client->call('searchBooks', array('title'=>'Guns, Germs'));
+
+	print_r($result).'\n';
+	
+
 
 	/*
 	console_log(date("Y-m-d");
@@ -28,6 +46,7 @@
     $dbHandler->addToken($token);
     */
 
+    /*
     console_log($dbHandler->getAllToken());
 
     foreach($dbHandler->getAllToken() as $token){
@@ -36,6 +55,7 @@
     		$dbHandler->deleteTokenByID($token->TokenID);
     	}
     }
+    */
 
 
 	// console_log($output);
