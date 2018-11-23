@@ -9,6 +9,12 @@
       $token_interval = "+1 hours";
       $cookie_interval = 600; //per second; 600 = 10 minutes
 
+      /* SOAP VARIABLES */ 
+      $localhost = "http://localhost:";
+      $port_soap = "5432"; // port for soap ws
+      $path_wsdl = "?wsdl";
+      $path_search = "/services/search"; // path for search services
+
       /* Use Global db_handler so we don't need to declare it in every page */
       $db_handler = new Database("localhost", "root", "", $db_name);
 	

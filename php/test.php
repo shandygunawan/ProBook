@@ -6,8 +6,10 @@
 
 	require_once("./nusoap-0.9.5/lib/nusoap.php");
 
+	// SOAP TESTING
+	
 	//This is your web service server WSDL URL address
-	$wsdl = "http://localhost:4789/services/search?wsdl";
+	$wsdl = "http://localhost:5432/services/search?wsdl";
 
 	// Create a client object
 	$client = new nusoap_client($wsdl, 'wsdl');
@@ -20,15 +22,15 @@
 	}
 
 	// call the method
-	$result = $client->call('searchBooks', array('title'=>'Guns, Germs'));
+	// $result = $client->call('searchBooks', array('title'=>'Guns, Germs'));
 
+	$result = $client->call('getBookDetails', array('id'=>'XLo9DgAAQBAJ'));	
 	print_r($result).'\n';
-	
 
 
+	// SET TOKEN TESTING
 	/*
 	console_log(date("Y-m-d");
-
 	
 	date_default_timezone_set("Asia/Jakarta");
 	$dt = new DateTime();
@@ -49,6 +51,7 @@
     /*
     console_log($dbHandler->getAllToken());
 
+	// DELETE TOKEN TESTING
     foreach($dbHandler->getAllToken() as $token){
     	$dtcheck = new DateTime();
     	if($token->ExpiryTime < date("Y-m-d h:i:sa")) {
@@ -56,37 +59,5 @@
     	}
     }
     */
-
-
-	// console_log($output);
-
-	// $dbHandler = new Database("localhost", "root", "", $dbName);
-
-	// $username = "higgsfield";
-	// $password = "Ihsan_wibu";
-
-	// console_log($dbHandler->getUserByID(1));
-
-	// if(count($dbHandler->getUserIDByUsername($username)) == 1) {
-	// 	$passwordCheck = $dbHandler->getPasswordByUsername($username);
-	// 	console_log($passwordCheck[0]->Password);
-	// 	$id = $dbHandler->getUserIDByUsername($username);
-	// 	console_log($id[0]->userID);
-	// }
-	// 	if($password === $passwordCheck[0]['Password']){
-	// 		echo "valid";
-
-	// 		$id = $dbHandler->getUserIDByUsername($username);
-
-	// 	    setcookie("id", $id[0]['userID'], time() + 100);
-
-	// 	}
-	// 	else {
-	// 		echo "Password incorrect";
-	// 	}
-	// }
-	// else {
-	// 	echo "Username not found";
-	// }
 ?>
 
