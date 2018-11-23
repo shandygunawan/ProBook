@@ -1,7 +1,15 @@
+// =========================================================
+//                    GLOBAL VARIABLE(S)
+// =========================================================  
+
 var isValidUsernameRegistration = false;
 var isValidEmailRegistration = false;
 var isValidphoneNumberRegistration = false;
 var isValidLogin = false;
+
+// =========================================================
+//                    LOGIN & REGISTRATION
+// =========================================================  
 
 function checkRegistrationForm(){
 	var name = document.getElementById("name").value;
@@ -215,6 +223,48 @@ function signOut() {
     });
 }
 
+// =========================================================
+//                    		SEARCH
+// =========================================================  
+
+function checkSearchForm(){
+	if(document.getElementById("search_bar").value === ""){
+		alert("Fill the search bar!");
+		return false;
+	}
+	else {
+
+		// Create AJAX
+		var xmlhttp = new XMLHttpRequest();
+
+		// Determine AJAX Actions based on state and status
+		xmlhttp.onreadystatechange = function(){
+
+			if(xmlhttp.readyState != 4 && xmlhttp.status == 200){
+				console.log("Validating");
+				
+			}
+			else if(xmlhttp.readyState === 4 && xmlhttp.status == 200){
+				console.log(xmlhttp.responseText);
+
+			}
+			else{
+				console.log("error");
+				// document.getElementById(field).innerHTML = "Error Occured."
+			}
+		}
+
+		xmlhttp.open("POST", "../php/validation.php", true);
+		xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		xmlhttp.send("field=" + field + "&query=" + query);
+	}
+}
+
+
+// =========================================================
+//                    		REVIEW
+// =========================================================  
+
 function checkStarChecked(){
 	var radios = document.getElementsByName('rate');
 	var checked = false;
@@ -233,12 +283,9 @@ function checkReviewForm(){
 	}
 }
 
-function checkSearchForm(){
-	if(document.getElementById("search_bar").value === ""){
-		alert("Fill the search bar!");
-		return false;
-	}
-}
+// =========================================================
+//                    		PROFILE
+// =========================================================  
 
 function checkEditProfileForm(){
 	var errmsg = "";

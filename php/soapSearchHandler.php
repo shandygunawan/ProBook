@@ -3,8 +3,14 @@
 	include_once("script.php");
 	require_once("./nusoap-0.9.5/lib/nusoap.php");
 
-	if(!isset($_POST["service_type"]) or !isset($_POST['value'])){
-		echo "AJAX ERROR";
+	/* Process data from POST */
+	$postdata = file_get_contents("php://input");
+	$request = json_decode($postdata);
+	$service_type = $request->service_type;
+	$value = $request->value;
+
+	if($service_type == null or $value == null){
+		echo "AJAX ERROR; Service_type: ".$service_type."; Value: ".$value;
 	}
 	else {
 		//This is web service server WSDL URL address
@@ -22,17 +28,16 @@
 
 		// call the method
 
-		if($_POST['service_type'] == "searchBook") {
-			$result = $client->call('searchBooks', array('title'=>$_POST['value']));
-			return $result;
+		if($service_type == "searchBooks") {
+			$result = $client->call('searchBooks', array('title'=>$value));
+			echo $result;
 		}
-		else if ($_POST['service_type'] == 'getBookDetails') {
-			$result = $client->call('getBookDetails', array('id'=>'XLo9DgAAQBAJ'));		
-			return $result;
+		else if ($service_type == 'getBookDetails') {
+			$result = $client->call('getBookDetails', array('id'=>$value));		
+			echo $result;
 		}
 		else {
 			echo "Service type error. Message: ". $err;
-			return null;
 		}
 	}
 ?>

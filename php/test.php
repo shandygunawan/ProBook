@@ -22,9 +22,10 @@
 	}
 
 	// call the method
-	// $result = $client->call('searchBooks', array('title'=>'Guns, Germs'));
+	$result = $client->call('searchBooks', array('title'=>'Android development'));
 
-	$result = $client->call('getBookDetails', array('id'=>'XLo9DgAAQBAJ'));	
+	// $result = $client->call('getBookDetails', array('id'=>'XLo9DgAAQBAJ'));	
+	console_log($result);
 	print_r($result).'\n';
 
 

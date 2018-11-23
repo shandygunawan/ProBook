@@ -42,6 +42,18 @@ function orderBook(userId, bookId){
 	xmlhttp.open("POST", "../php/orderValidation.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send("amount="+ document.getElementById("order_amount").value + "&user_id=" + userId + "&book_id=" + bookId);
+}
 
+function ArraytoString(arr_param){
+	var str_array = "";
+	for(var i = 0; i < arr_param.length; i++){
 
+		str_array.concat(arr_param[i]);
+		// last authors name, no need for coma
+		if((i+1) < arr_param.length){
+			str_array.concat(", ");
+		}	
+	}
+
+	return str_array;
 }
