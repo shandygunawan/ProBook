@@ -13,8 +13,7 @@ searchApp.controller('searchController', function($scope,$http){
 		        method : "POST",
 		        url : "/php/soapSearchHandler.php",
 		        data : {
-		        	service_type : "searchBooks",
-		        	value: $scope.formData.search_bar
+		        	keyword: $scope.formData.search_bar
 		        },
 		        headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 		    }).then(function(response) {

@@ -1,5 +1,6 @@
 <?php
       include_once("db.php");
+      require_once("nusoap-0.9.5/lib/nusoap.php");
 
       // =========================================================
       //                    GLOBAL VARIABLE(S)
@@ -7,13 +8,13 @@
 
 	$db_name = "wbd"; //change this if you use a different dbname in your mysql
       $token_interval = "+1 hours";
-      $cookie_interval = 600; //per second; 600 = 10 minutes
+      $cookie_interval = 6000; //per second; 600 = 10 minutes
 
       /* SOAP VARIABLES */ 
-      $localhost = "http://localhost:";
       $port_soap = "5432"; // port for soap ws
-      $path_wsdl = "?wsdl";
-      $path_search = "/services/search"; // path for search services
+      $wsdl_search = "http://localhost:".$port_soap."/services/search?wsdl";
+      $wsdl_soap = "";
+      $client_search = new nusoap_client($wsdl_search, 'wsdl');
 
       /* Use Global db_handler so we don't need to declare it in every page */
       $db_handler = new Database("localhost", "root", "", $db_name);

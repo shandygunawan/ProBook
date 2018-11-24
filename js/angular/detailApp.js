@@ -1,0 +1,1 @@
+var detailApp = angular.module("detailApp", []);

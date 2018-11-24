@@ -38,4 +38,27 @@
 		// echo "</button></form></td></tr>";
 	}
 	*/
+
+	/*
+	// IN DETAIL.PHP
+
+	console_log($review_array);
+	if(count($review_array) > 0) {
+		foreach($review_array as $review) {
+			echo '<tr> <td style='vertical-align:top; width:80px;'>';
+			echo '<img src='..'. $review->PicturePath. '' class='squareImageSmall' style='border: 1px solid black;'></img>';
+			echo '</td> <td style='vertical-align:top;'>';
+			echo '<span style='padding-left:5px;' class='reviewUsername'>@'. $review->Username. '</span>' ; echo '<br>';
+			echo '<p style='text-align:justify;padding-left:7px; margin-top:5px'>' . $review->Comment . '</p>'; echo '<br>';
+			echo '</td><td style='text-align:center; vertical-align:center; float:right;'>';
+			echo '<img src='../asset/star_rounded.png' class='squareImageSuperSmall'></img><br>';
+			echo $review->Score.'.0/5.0';
+			echo '</td></tr>';
+			echo '<tr><td></td></tr>';
+		}	
+	}
+	else {
+		echo '<tr> <td> <h3> There is no review for this book. </h3> </td> </tr>';
+	}	
+	*/
 ?>
