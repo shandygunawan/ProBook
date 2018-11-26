@@ -9,6 +9,9 @@ searchApp.controller('searchController', function($scope,$http){
 		}
 		else {
 			document.getElementById("waiting_text").innerHTML="Retrieving Data. Please wait.";
+			document.getElementById("search_result").innerHTML= "";
+			document.getElementById("found_books_count").innerHTML = "";
+			document.getElementById("book_table").style.display = "none";
 			$http({
 		        method : "POST",
 		        url : "/php/soapSearchHandler.php",
@@ -21,8 +24,16 @@ searchApp.controller('searchController', function($scope,$http){
 		        console.log(response.data);
 		        $scope.book_list = response.data; // response.data is already a JSON array
 		        
-		        document.getElementById("search_result").innerHTML= "Search Result";
-		        document.getElementById("found_books_count").innerHTML= "Found " + $scope.book_list.length.toString() + " Result(s)";
+		        document.getElementById("search_result").innerHTML = "Search Result";
+
+		        if(response.data == "Error. Result null"){
+		        	document.getElementById("found_books_count").innerHTML = "Found 0 Result(s)";
+		        }
+		        else {
+		        	document.getElementById("found_books_count").innerHTML = "Found " + $scope.book_list.length.toString() + " Result(s)";	
+		        	document.getElementById("book_table").style.display = "block";
+		        }
+		        
 
 		    }, function(response) {
 		        console.log(response.statusText);

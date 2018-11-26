@@ -18,10 +18,11 @@
 			return null;
 		}
 
-		$result = $client_search->call('getBookDetails', array('id'=>$_GET['book_id']));		
-		
+		$result = $client_search->call('getBookDetails', array('id'=>$_GET['book_id']));
 		$book_info = json_decode($result);
-		console_log($book_info);
+
+		$result = $client_search->call('searchBooksByTitle', array('title'=>"computers"));
+		$rec_list = json_decode($result);
 	}
 ?>
 
@@ -115,6 +116,7 @@
 		</table>
 		<p></p>
 		<h2 style='margin-bottom:5px'>Recommendation</h2>
+		<table style="width:100%"> <?php printRecommendationList($rec_list) ?> </table>
 		<p></p>
 		<h2 style='margin-bottom:5px'>Reviews</h2>
 		<table style='width:100%'>

@@ -4,29 +4,26 @@
 	// ONLY FOR FUNCTIONALITIES TESTING PURPOSE
 	include("script.php");
 
-	require_once("./nusoap-0.9.5/lib/nusoap.php");
-
-	// SOAP TESTING
-	
-	//This is your web service server WSDL URL address
-	$wsdl = "http://localhost:5432/services/search?wsdl";
-
-	// Create a client object
-	$client = new nusoap_client($wsdl, 'wsdl');
-	$err = $client->getError();
-
-	if($err){
-		// Display the error
-		echo "<h2>Constructor error</h2>". $err;
-		exit();
-	}
 
 	// call the method
-	$result = $client->call('searchBooks', array('title'=>'Android development'));
+	$result = $client_search->call('getBookDetails', array('id'=>"suP3AgAAQBAJ"));
+		
+	$book_info = json_decode($result);
+	console_log($book_info);
+
+	console_log($client_recommendation->call('searchBooksByCategory', array('category'=>"computers")));
+
+	foreach($book_info->volumeInfo->categories as $category) {
+		console_log($category);
+
+		// $rec_list = json_decode($book_list);
+		// console_log($rec_list);
+
+	}
 
 	// $result = $client->call('getBookDetails', array('id'=>'XLo9DgAAQBAJ'));	
-	console_log($result);
-	print_r($result).'\n';
+	// console_log($result);
+	// print_r($result).'\n';
 
 
 	// SET TOKEN TESTING

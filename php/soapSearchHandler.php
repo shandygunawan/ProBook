@@ -8,7 +8,7 @@
 	$keyword = $request->keyword;
 
 	if($keyword == null){
-		echo "AJAX ERROR; keyword: ".$keyword;
+		echo "AJAX ERROR; keyword: null";
 	}
 	else {
 		$err = $client_search->getError();
@@ -19,8 +19,8 @@
 			return null;
 		}
 
-		$result = $client_search->call('searchBooks', array('title'=>$keyword));
-		
+		$result = $client_search->call('searchBooksByTitle', array('title'=>$keyword));	
+
 		if($result == null)
 			echo "Error. Result null";
 		else {
