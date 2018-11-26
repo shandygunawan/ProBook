@@ -25,10 +25,10 @@
         $user->PicturePath = "/asset/user_img/default.jpg";
 
         /* ADD USER TO DB */
-        $dbHandler->addNewUser($user);
+        $db_handler->addNewUser($user);
 
         /* GET USER'S ID */
-        $id = $dbHandler->getUserIDByUsername($_POST["username"]);
+        $id = $db_handler->getUserIDByUsername($_POST["username"]);
 
 	    /* SET ACCESS TOKEN */
 	    assignToken($id[0]->UserID);
@@ -93,13 +93,19 @@
 
 			<tr>
 				<td class="tdName">Address</td>
-				<td> <TEXTAREA name="address" id="address" ROWS="4" COLS="20"></TEXTAREA></td>
+				<td> <TEXTAREA name="address" id="address" ROWS="4" COLS="21"></TEXTAREA></td>
 			</tr>
 
 			<tr>
 				<td class="tdName">Phone Number</td>
 				<td> <input type="text" name="phone_number" id="phone_number" onkeyup="validatePhoneNumber(this.value)"> </td>
 				<td> <div id="phone_number_check_icon"></div> </td>
+			</tr>
+
+			<tr>
+				<td class="tdName">Card Number</td>
+				<td> <input type="text" name="card_number" id="card_number" onkeyup="validateCardNumber(this.value)"> </td>
+				<td> <div id="card_number_check_icon"></div> </td>
 			</tr>
 
 		</table>

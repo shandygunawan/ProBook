@@ -4,6 +4,11 @@
 	// ONLY FOR FUNCTIONALITIES TESTING PURPOSE
 	include("script.php");
 
+	$oldUser = $db_handler->getUserByID(1);
+
+	console_log($oldUser);
+
+	/*
 
 	// call the method
 	$result = $client_search->call('getBookDetails', array('id'=>"suP3AgAAQBAJ"));
@@ -20,6 +25,7 @@
 		// console_log($rec_list);
 
 	}
+	*/
 
 	// $result = $client->call('getBookDetails', array('id'=>'XLo9DgAAQBAJ'));	
 	// console_log($result);

@@ -40,20 +40,29 @@
 				<td>Username</td>
 				<td style="padding-left:5%"><?php echo $user_info->Username; ?></td>
 			</tr>
+
 			<tr>
 				<td style="width:64px"><img src="../asset/email icon.svg" class="squareImageSuperSmall"></td>
 				<td>E-mail</td>
 				<td style="padding-left:5%"><?php echo $user_info->Email; ?></td>
 			</tr>
+
 			<tr>
 				<td style="width:64px"><img src="../asset/home icon.svg" class="squareImageSuperSmall"></td>
 				<td>Address</td>
 				<td style="width:700px; padding-left:5%; "><?php echo $user_info->Address; ?></td>
 			</tr>
+
 			<tr>
 				<td style="width:64px"><img src="../asset/Telp icon.png" class="squareImageSuperSmall"></td>
 				<td>Phone Number</td>
 				<td style="padding-left:5%"><?php echo $user_info->PhoneNumber; ?></td>
+			</tr>
+
+			<tr>
+				<td style="width:64px"><img src="../asset/card icon.png" class="squareImageSuperSmall"></td>
+				<td>Card Number</td>
+				<td style="padding-left:5%"><?php echo $user_info->CardNumber; ?></td>
 			</tr>
 		</table>	
 	</div>

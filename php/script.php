@@ -6,7 +6,7 @@
       //                    GLOBAL VARIABLE(S)
       // =========================================================      
 
-	$db_name = "wbd"; //change this if you use a different dbname in your mysql
+	$db_name = "ProBook"; //change this if you use a different dbname in your mysql
       $token_interval = "+1 hours";
       $cookie_interval = 6000; //per second; 600 = 10 minutes
 

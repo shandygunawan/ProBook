@@ -5,7 +5,7 @@
 		header('Location: '. "login.php");
 	}
 	
-	$user_array = $db_handler->getUserByID($_COOKIE["id"]);
+	$user_array = $db_handler->getUserByID($_COOKIE["user_id"]);
 	$user_info = $user_array[0];
 	console_log($user_info);
 	
@@ -53,22 +53,32 @@
 					<button type="button" onclick="clicker(filesupload);" style="width:9.5%"> Browse...  </button>
                 </td>
 			</tr>
+
 			<tr>
 				<td>Name</td>
 				<td style="width:300px"><input type="text" id="name" style="width:70%" value="<?php echo $user_info->Name; ?>" name="name"> </td>
 			</tr>
+
 			<tr>
 				<td>Address</td>
 				<td style="width:300px"> <input type="text" id="address" style="width:70%" value="<?php echo $user_info->Address; ?>" name="address"></td>
 			</tr>
+
 			<tr>
 				<td>Phone Number</td>
 				<td style="width:300px"><input type="text" style="width:70%" value="<?php echo $user_info->PhoneNumber; ?>" name="phone_number" id="phone_number" onkeyup="validatePhoneNumber(this.value)"></td>
 				<td style="width: 10px;height: 10px"> <div id="phone_number_check_icon"></div> </td>			
 			</tr>
+
+			<tr>
+				<td>Card Number</td>
+				<td style="width:300px"><input type="text" style="width:70%" value="<?php echo $user_info->CardNumber; ?>" name="card_number" id="card_number" onkeyup="validateCardNumber(this.value)"></td>
+				<td style="width: 10px;height: 10px"> <div id="card_number_check_icon"></div> </td>			
+			</tr>
+
 		</table>	
 	
-		<input type="hidden" name="user_id" id="user_id" value="<?php echo $_COOKIE['id']; ?>">
+		<input type="hidden" name="user_id" id="user_id" value="<?php echo $_COOKIE['user_id']; ?>">
 		<input type="submit" value="Save" id="submit_button" name="submit_button" class="buttonStyleBlueWide fontToLinotte" style="float:right; font-size:20px; padding-left:20px; padding-right:20px; padding-bottom: 7px; padding-top: 7px" >
 		</form>
 		<button onclick="Back();" name="button_back2" id="button_back2" class="buttonStyleRedWide fontToLinotte" type="button"> Back</button>

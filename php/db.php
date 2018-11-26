@@ -163,7 +163,7 @@
 		// =========================================================
 
 		public function updateUserData ($user) {
-			$query = "UPDATE $this->userTable SET name = :Name, username = :Username, email = :Email, password = :Password, address = :Address, phonenumber = :PhoneNumber, picturepath = :PicturePath WHERE userid = :UserID";
+			$query = "UPDATE $this->userTable SET name = :Name, username = :Username, email = :Email, password = :Password, address = :Address, phonenumber = :PhoneNumber, cardnumber = :CardNumber, picturepath = :PicturePath WHERE userid = :UserID";
 
 			return $this->runQuery($query, $user);	
 		}

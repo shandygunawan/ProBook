@@ -5,6 +5,7 @@
 var isValidUsernameRegistration = false;
 var isValidEmailRegistration = false;
 var isValidphoneNumberRegistration = false;
+var isValidCardNumberRegistration = false;
 var isValidLogin = false;
 
 // =========================================================
@@ -19,9 +20,10 @@ function checkRegistrationForm(){
 	var conf_password = document.getElementById("conf_password").value;
 	var address = document.getElementById("address").value;
 	var phone_number = document.getElementById("phone_number").value;
+	var card_number = document.getElementById("card_number").value;
 
 	var errmsg = "";
-	if(name == '' || username == '' || email == '' || password == '' || conf_password == '' || address == '' || phone_number == '' ) {
+	if(name == '' || username == '' || email == '' || password == '' || conf_password == '' || address == '' || phone_number == '' || card_number == '') {
 		errmsg = errmsg.concat("Fill all fields.\n");
 	}
 	
@@ -41,6 +43,11 @@ function checkRegistrationForm(){
 		errmsg = errmsg.concat("Phone number is not correct.\n");
 	}
 	
+	if(isValidCardNumberRegistration === false) {
+		errmsg = errmsg.concat("Card number is not exist.\n");
+	}
+
+
 	if(errmsg === ""){
 
 	}
@@ -124,6 +131,43 @@ function validatePhoneNumber(number){
 		document.getElementById("phone_number_check_icon").innerHTML = "<img src='../asset/wrong.png' style='width:10px;height:10px;'></img>";
 		isValidphoneNumberRegistration = false;	
 	}
+}
+
+function validateCardNumber(number){
+	var xmlhttp = new XMLHttpRequest();
+
+	xmlhttp.onreadystatechange = function(){
+
+		// console.log("state : " + xmlhttp.readyState);
+		// console.log("status: " + xmlhttp.status);
+
+		if(xmlhttp.readyState != 4 && xmlhttp.status == 200){
+			console.log("Validating");
+
+		}
+		else if(xmlhttp.readyState === 4 && xmlhttp.status == 200){
+			console.log(xmlhttp.responseText);
+			var json_response = JSON.parse(xmlhttp.responseText);
+			
+			if(json_response.response === "Valid"){
+				isValidCardNumberRegistration = true;
+				document.getElementById("card_number_check_icon").innerHTML = "<img src='../asset/check.png' style='width:10px;height:10px;'></img>";
+			}
+			else {
+				document.getElementById("card_number_check_icon").innerHTML = "<img src='../asset/wrong.png' style='width:10px;height:10px;'></img>";
+				isValidCardNumberRegistration = false;	
+			}
+
+		}
+		else{
+			console.log("error");
+			// document.getElementById(field).innerHTML = "Error Occured."
+		}
+
+	}
+	xmlhttp.open("POST", "http://127.0.0.1:8080/validate", false); //false = synchronous, supaya ga kebablasan jalan ke alert("username/password inccorrect")
+	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	xmlhttp.send("card_number=" + number);
 }
 
 function validate(field, query){
@@ -289,12 +333,16 @@ function checkReviewForm(){
 
 function checkEditProfileForm(){
 	var errmsg = "";
-	if(document.getElementById("name").value === "" || document.getElementById("address") === "" || document.getElementById("phone_number") === ""){
+	if(document.getElementById("name").value === "" || document.getElementById("address") === "" || document.getElementById("phone_number") === "" || document.getElementById("card_number") === ""){
 		errmsg = errmsg.concat("Fill all fields.\n");
 	}
 
 	if(isValidphoneNumberRegistration === false) {
 		errmsg = errmsg.concat("Phone number is not correct.\n");
+	}
+
+	if(isValidCardNumberRegistration === false) {
+		errmsg = errmsg.concat("Card number is not exist.\n");
 	}
 
 	if(errmsg === ""){
