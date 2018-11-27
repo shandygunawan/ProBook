@@ -1,0 +1,9 @@
+{
+    "name": "bank-service",
+    "main": "server.js",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "express": "~4.10.2",
+        "mysql": "^2.13.0"
+    }
+}
