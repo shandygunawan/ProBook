@@ -1,19 +1,10 @@
 <?php
 
-	include("script.php");
-	include("db.php");
-
+	include_once("script.php");
 	
 	if(isset($_POST['comment']) && isset($_POST['rate']) && isset($_POST['order_id']) ){
 		
-
-		$review = new stdClass;
-		$review->Score = $_POST['rate'];
-		$review->Comment = $_POST['comment'];
-		$review->OrderID = $_POST['order_id'];
-
-		$dbHandler = new Database("localhost", "root", "", $dbName);
-		$dbHandler->updateReview($review);
+		$client_order->call('updateOrderReview', array('order_id'=>$_POST['order_id'], 'score'=>$_POST['rate'], 'comment'=>$_POST['comment']));
 
 		header("Location:"."../view/history.php");
 	}

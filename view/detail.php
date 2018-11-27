@@ -21,8 +21,16 @@
 		$result = $client_search->call('getBookDetails', array('id'=>$_GET['book_id']));
 		$book_info = json_decode($result);
 
-		$result = $client_search->call('searchBooksByTitle', array('title'=>"computers"));
-		$rec_list = json_decode($result);
+		console_log($book_info);
+
+		$rec_list = [];
+
+		foreach($book_info->volumeInfo->categories as $category) {
+			$result = $client_search->call('getBookRecommendation', array('category'=>$category));
+			array_push($rec_list, json_decode($result));
+		}
+
+		console_log($rec_list);
 	}
 ?>
 

@@ -1,26 +1,16 @@
 <?php
 
 	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
-	include($_SERVER['DOCUMENT_ROOT']."/php/db.php");
-	check_cookie();
-
-
-	$dbHandler = new Database("localhost", "root", "", $dbName);
-	$book_array = $dbHandler->findBookByID($_POST['book_id']);
-	$book_info = $book_array[0];
-
-	/*
-	if($_GET['id'] != null){
-		$book_id = $_GET['id'];
-		
-		$dbHandler = new Database("localhost", "root", "", $dbName);
-		$book_array = $dbHandler->findBookByID($book_id);
-		$book_info = $book_array[0];
-
-		$review_array = $dbHandler->getReviewAndReviewer($book_info->bookID);
+	
+	if(!checkActiveUser()) {
+		clearAllCookies();
+		header('Location: '. "login.php");
 	}
-	*/
 
+	console_log($_POST['book_id']);
+	console_log($_POST['order_id']);
+	$result = $client_search->call('getBookDetails', array('id'=>$_POST['book_id']));
+	$book_info = json_decode($result);
 ?>
 
 <!DOCTYPE html>
@@ -37,9 +27,9 @@
 	<div id="bodyPage" class="paddingLeftLarge paddingRightLarge paddingTopLarge fadeIn">
 	<form method="post" action="../php/reviewHandler.php" onsubmit="return checkReviewForm()">
 		<div>
-			<img src="..<?php echo $book_info->PicturePath ?>" class="squareImageMedium" style="float:right;">
-			<h1 id="book_title" style="margin-bottom: -10px"><?php echo $book_info->BookName ?></h1>
-			<span id="book_author" style="font-size: 20px">&nbsp;<?php echo $book_info->Author ?></span>
+			<img src="<?php echo $book_info->volumeInfo->imageLinks->thumbnail ?>" class="squareImageMedium" style="float:right;">
+			<h1 id="book_title" style="margin-bottom: -10px"><?php echo $book_info->volumeInfo->title ?></h1>
+			<span id="book_author" style="font-size: 20px">&nbsp;<?php echo implode(', ', $book_info->volumeInfo->authors); ?></span>
 		</div>
 		<br><br>
 

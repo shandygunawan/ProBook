@@ -1,19 +1,16 @@
 <?php
 	
-	include($_SERVER['DOCUMENT_ROOT']."/php/script.php");
+	include_once($_SERVER['DOCUMENT_ROOT']."/php/script.php");
 	
 	if(!checkActiveUser()) {
 		clearAllCookies();
 		header('Location: '. "login.php");
 	}
 	
-	$user_id = $_COOKIE["user_id"];
-	$list_of_order = $db_handler->getBookOrder($user_id);
-	console_log($list_of_order);
+	$result = $client_order->call('getOrdersByUserId', array('user_id'=>$_COOKIE['user_id']));
+	$list_of_order = json_decode($result);
 
-	function cprint($string) {
-		echo $string;
-	}
+	console_log($list_of_order);
 
 	function formatDate($date) {
 		$datum = strtotime($date);
@@ -25,44 +22,47 @@
 	}
 
 	function CreateOrderTable($order) {
-		$is_reviewed = $order->Comment;
+		GLOBAL $client_search;
+		$is_reviewed = $order->Score;
+		$result = $client_search->call('getBookDetails', array('id'=>$order->BookId));
+		$book_info = json_decode($result);		
 
-		cprint("<tr>");
-			cprint("<td rowspan = '2' style='vertical-align:top; width:200px; height:200px'>");
-				cprint("<img src='..$order->PicturePath' class='squareImageLarge'></img>");
-			cprint("</td>");
-			cprint("<td rowspan = '2' style='vertical-align:top;'>");
-				cprint("<span class='bookTitleList'> $order->BookName </span> <br/>");
-				cprint("<span style = 'padding-left: 10px;'> Jumlah : $order->Amount </span> <br/>");
+		// console_log($book_info);
+
+		echo "<tr>";
+			echo "<td rowspan = '2' style='vertical-align:top; width:200px; height:200px'>";
+				echo "<img src='". $book_info->volumeInfo->imageLinks->thumbnail."' class='squareImageLarge'></img>";
+			echo "</td>";
+			echo "<td rowspan = '2' style='vertical-align:top;'>";
+				echo "<span class='bookTitleList'>". $book_info->volumeInfo->title.".</span> <br/>";
+				echo "<span style = 'padding-left: 10px;'> Jumlah : ". $order->Amount."</span> <br/>";
 				$comment_placeholder = "Belum direview";
-				if ($is_reviewed) {
+				if ($is_reviewed > 0) {
 					$comment_placeholder = "Anda sudah memberikan review";
 				}
-				cprint("<span style = 'padding-left: 10px;'> $comment_placeholder </span>");
-			cprint("</td>");
-			cprint("<td style='float:right; vertical-align:top;'>");
-				$date_placeholder = formatDate($order->OrderDate);
-				cprint("<span> $date_placeholder </span> <br/>");
-				cprint("<span> Nomor Order : #$order->OrderID </span> <br/>");
-			cprint("</td>");
-		cprint("</tr>");
+				echo "<span style = 'padding-left: 10px;'>". $comment_placeholder ."</span>";
+			echo "</td>";
+			echo "<td style='float:right; vertical-align:top;'>";
+				$date_placeholder = formatDate($order->OrderTime);
+				echo "<span>". $date_placeholder ."</span> <br/>";
+				echo "<span> Nomor Order : #". $order->OrderId. "</span> <br/>";
+			echo "</td>";
+		echo "</tr>";
 
-		cprint("<tr>");
-			cprint("<td style='vertical-align:bottom;'>");
+		echo "<tr>";
+			echo "<td style='vertical-align:bottom;'>";
 				if (!$is_reviewed) {
-					cprint("<form method='post' action='review.php'>");
-					cprint("<input type='hidden' name='book_id' value='"); echo $order->BookID; cprint("'>");
-					cprint("<input type='hidden' name='order_id' value='"); echo $order->OrderID; cprint("'>");
-					cprint("<button style = 'float: right;' type='submit' class='buttonStyleBlueWide' name='review_orderid' value='");
-					echo $order->OrderID;
-					cprint("'> Review </button>");
-					cprint("</form>");
+					echo "<form method='post' action='review.php'>";
+					echo "<input type='hidden' name='book_id' value='".$order->BookId."'>";
+					echo "<input type='hidden' name='order_id' value='".$order->OrderId."'>";
+					echo "<button style = 'float: right;' type='submit' class='buttonStyleBlueWide' name='review_orderid'> review </button>";
+					echo "</form>";
 				}
 				else{
-					cprint("<form> <button type='submit' class='buttonStyleBlueWide' name='review_orderid' style='visibility:hidden;'> Review </button></form>");
+					echo "<form> <button type='submit' class='buttonStyleBlueWide' name='review_orderid' style='visibility:hidden;'> Review </button></form>";
 				}
-			cprint("</td>");
-		cprint("</tr>");
+			echo "</td>";
+		echo "</tr>";
 	}
 ?>
 

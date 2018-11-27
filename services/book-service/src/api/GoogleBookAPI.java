@@ -1,6 +1,7 @@
 package api;
 
 import java.util.ArrayList;
+import java.util.Random;
 import com.google.gson.*; /* https://github.com/google/gson */
 
 import db.DBHandler;
@@ -53,21 +54,25 @@ public class GoogleBookAPI {
 
 	}
 	
-	public static String getBooksByCategory(String category) {
+	public static String getRandomBookByCategory(String category) {
 		try {
 			
 			// add category to google's API URL link
 			String url_full = "https://www.googleapis.com/books/v1/volumes?q=subject:" + category;
-		
+			
 			// get JSON list of books from HTTPURLConnection
 			String str_booklist = NetworkHandler.httpConGet(url_full);
 			
 			// Convert string to java object class + remove unnecessary components
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			ArrayList<Book> book_list = (gson.fromJson(str_booklist, BookList.class)).getBookList();
-
 			
-			return (gson.toJson(book_list).toString());
+			// Get a random book
+			Random rand = new Random();
+			int n = rand.nextInt((book_list.size()-1));
+			Book random_book = book_list.get(n);
+			
+			return (gson.toJson(random_book).toString());
 			
 		}
 		catch(Exception e) {

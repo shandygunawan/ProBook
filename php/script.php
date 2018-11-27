@@ -11,9 +11,12 @@
       $cookie_interval = 6000; //per second; 600 = 10 minutes
 
       /* SOAP VARIABLES */ 
-      $port_soap = "5432"; // port for soap ws
-      $wsdl_search = "http://localhost:".$port_soap."/services/search?wsdl";
+      $port_search = "8081";
+      $port_order = "8082"; 
+      $wsdl_search = "http://localhost:".$port_search."/services/search?wsdl";
+      $wsdl_order = "http://localhost:".$port_order."/services/order?wsdl";
       $client_search = new nusoap_client($wsdl_search, 'wsdl');
+      $client_order = new nusoap_client($wsdl_order, 'wsdl');
 
       /* Use Global db_handler so we don't need to declare it in every page */
       $db_handler = new Database("localhost", "root", "", $db_name);
@@ -302,8 +305,6 @@
       }
 
       function printRecommendationList($rec_list){
-            console_log($rec_list);
-
             if(count($rec_list) > 0){
                   foreach($rec_list as $book){
                         echo "<tr> <td style='vertical-align:top; width:80px;'>";

@@ -14,9 +14,10 @@ public interface Search {
 	public String searchBooksByTitle(@WebParam(name = "title") @XmlElement(required = true) String title);
 	
 	@WebMethod
-	public String searchBooksByCategory(@WebParam(name="category") @XmlElement(required = true) String category);
+	public String getBookDetails(@WebParam(name="id") @XmlElement(required = true) String id);
 	
 	@WebMethod
-	public String getBookDetails(@WebParam(name="id") @XmlElement(required = true) String id);
+	public String getBookRecommendation(@WebParam(name="category") @XmlElement(required = true) String category);
+	
 	
 }

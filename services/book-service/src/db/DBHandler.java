@@ -9,8 +9,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+
 import model.Book;
 import model.SaleInfo;
+import util.Convertor;
 
 public class DBHandler {
 	private final static String JDBC_DRIVER = "com.mysql.jdbc.Driver";
@@ -61,8 +64,6 @@ public class DBHandler {
 			}
 		}
 		
-		// Close statement and connection
-		conn.close();
 	}
 	
 	public static Float getPriceByBookId(String book_id) throws SQLException {
@@ -82,27 +83,11 @@ public class DBHandler {
 		return price; 
 	}
 	
-	public static Integer getAmountByBookId(String book_id) throws SQLException {
-		Connection conn = getConnection();
-		
-		// SQL query
-		String query = "SELECT price FROM " + DBHandler.TABLE_ORDER + " WHERE BookId = ?;";
-		
-		// Prepare statement and get query's result
-		PreparedStatement stmt = conn.prepareStatement(query);
-		stmt.setString(1, book_id);
-		ResultSet result = stmt.executeQuery();
-		
-		Integer amount = result.next() ? result.getInt("Amount"):-1; 
-		
-		return amount;
-	}
-	
 	public static String getMostOrderedBookIdByCategory(String category) throws SQLException {
 		Connection conn = getConnection();
 		
 		// SQL query
-		String query = "SELECT BookID, SUM(Amount) as Total FROM " + DBHandler.TABLE_ORDER + " WHERE Category = ?"
+		String query = "SELECT BookId, SUM(Amount) as Total FROM " + DBHandler.TABLE_ORDER + " WHERE Category = ?"
 				+ "GROUP BY BookID ORDER BY total DESC LIMIT 1;";
 		
 		// Prepare statement and get query's result
@@ -120,11 +105,37 @@ public class DBHandler {
 		return mostOrdered;
 	}
 	
+	public static String getOrdersByUserId(Integer user_id) throws SQLException {
+		Connection conn = getConnection();
+		
+		String query = "SELECT * FROM " + DBHandler.TABLE_ORDER + " WHERE UserId = ?"
+				+ " ORDER BY OrderTime DESC;";
+		
+		
+		// Prepare statement and get query's result
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setInt(1, user_id);
+		System.out.println(stmt.toString());
+		ResultSet result = stmt.executeQuery();
+		
+		try {
+			return Convertor.convertResultSetToJSON(result).toString();
+		}
+		catch(Exception e) {
+			System.out.println("MESSAGE: " + e.getMessage());
+			System.out.println("STACK TRACE:");
+			e.printStackTrace();
+			
+			return null;
+
+		}
+		
+	}
+	
 	public static void insertOrder(String book_id, Integer user_id, String category, Integer amount) throws SQLException {
 		Connection conn = getConnection();
 		
 		// get date & time
-		
 		java.util.Date now = new java.util.Date();
 		java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String current_time = sdf.format(now);
@@ -142,5 +153,22 @@ public class DBHandler {
         stmt.executeUpdate();
         
         System.out.println("Insertion successful for BookId = " + book_id + ", UserId = " + user_id.toString() + ", Amount = " + amount.toString());
+	}
+	
+	public static void updateOrderReview(Integer order_id, Integer score, String comment) throws SQLException {
+		Connection conn = getConnection();
+		
+		// SQL Query
+		String query = "UPDATE " + DBHandler.TABLE_ORDER + " SET Score = ? , Comment = ? WHERE OrderId = ?;";
+		
+		// Prepare statement and get query's result
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setFloat(1, score);
+		stmt.setString(2, comment);
+        stmt.setInt(3, order_id);
+        
+        System.out.println(stmt.toString());
+        
+        stmt.executeUpdate();
 	}
 }

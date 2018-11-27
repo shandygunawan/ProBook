@@ -34,5 +34,4 @@ public class NetworkHandler {
 		return str_return.toString();
 	}
 	
-	public String connectOrder()
 }
