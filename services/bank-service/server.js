@@ -66,25 +66,32 @@ app.post('/transfer', function (req, res) {
         }
         else {
             if (results[0].balance > amount) {
-                console.log(results[0].balance);
                 let new_src_amt = results[0].balance - amount;
-                mc.query('UPDATE cards SET balance=? where card_number=?', [new_src_amt, src_number], function (error, results1, fields) {
+                mc.query('UPDATE cards SET balance=? where card_number=?', [new_src_amt, src_number], function (error, results, fields) {
                     if (error) {
                         return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
                     }
                     else {
-                        let new_dst_amt = results[0].balance + amount;
-                        mc.query('UPDATE cards SET balance=? where card_number=?', [new_dst_amt, dst_number], function (error, results1, fields) {
+                        mc.query('SELECT balance FROM cards where card_number=?', [dst_number], function (error, results1, fields) {
                             if (error) {
                                 return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
                             }
                             else {
-                                mc.query('INSERT INTO transactions SET ?', {sender: src_number, receiver: dst_number, amount: amount}, function (error, results2, fields) {
+                                let new_dst_amt = parseInt(results1[0].balance) + parseInt(amount);
+                                console.log(results1[0].balance);
+                                mc.query('UPDATE cards SET balance=? where card_number=?', [new_dst_amt, dst_number], function (error, results, fields) {
                                     if (error) {
                                         return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
                                     }
                                     else {
-                                        return res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Transaction success' }));
+                                        mc.query('INSERT INTO transactions SET ?', {sender: src_number, receiver: dst_number, amount: amount}, function (error, results2, fields) {
+                                            if (error) {
+                                                return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
+                                            }
+                                            else {
+                                                return res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Transaction success' }));
+                                            }
+                                        });
                                     }
                                 });
                             }
