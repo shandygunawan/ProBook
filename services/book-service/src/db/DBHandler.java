@@ -115,7 +115,6 @@ public class DBHandler {
 		// Prepare statement and get query's result
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.setInt(1, user_id);
-		System.out.println(stmt.toString());
 		ResultSet result = stmt.executeQuery();
 		
 		try {
@@ -130,6 +129,47 @@ public class DBHandler {
 
 		}
 		
+	}
+	
+	public static String getReviewsByBookId(String book_id) throws SQLException {
+		Connection conn = getConnection();
+		
+		String query = "SELECT * FROM " + DBHandler.TABLE_ORDER + " WHERE BookId = ? AND Comment IS NOT NULL ORDER BY OrderTime DESC";
+		
+		// Prepare statement and get query's result
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setString(1, book_id);
+		System.out.println(stmt.toString());
+		ResultSet result = stmt.executeQuery();
+		
+		try {
+			return Convertor.convertResultSetToJSON(result).toString();
+		}
+		catch(Exception e) {
+			System.out.println("MESSAGE: " + e.getMessage());
+			System.out.println("STACK TRACE:");
+			e.printStackTrace();
+			
+			return null;
+		}
+	}
+	
+	public static Float getAverageRatingByBookId(String book_id) throws SQLException {
+		Connection conn = getConnection();
+		
+		String query = "SELECT AVG(Score) as AvgRating FROM " + DBHandler.TABLE_ORDER + " WHERE BookId = ? AND SCORE IS NOT NULL";
+		
+		// Prepare statement and get query's result
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setString(1, book_id);
+		System.out.println(stmt.toString());
+		ResultSet result = stmt.executeQuery();
+		
+		if(result.next()) {
+			return result.getFloat("AvgRating");
+		}
+		
+		return null;
 	}
 	
 	public static void insertOrder(String book_id, Integer user_id, String category, Integer amount) throws SQLException {

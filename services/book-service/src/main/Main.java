@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		
+		/*
 		try {
 			Endpoint.publish("http://localhost:8081/services/search", new SearchImpl());
 			Endpoint.publish("http://localhost:8082/services/order", new OrderImpl());
@@ -22,12 +22,17 @@ public class Main {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+		*/
 		
 		
 		
-		
-		/*
 		try {
+			
+			OrderImpl orderImpl = new OrderImpl();
+			orderImpl.orderBook("CpXeKjZN7ZAC", 1, 5, "1234123412341234", "Computers", 50000.00);
+			
+//			Float rating = DBHandler.getAverageRatingByBookId("PJZGDwAAQBAJ");
+//			System.out.println(rating.toString());
 //			 DBHandler.insertOrder("CpXeKjZN7ZAC", 1, "Computers", 1);
 //			 DBHandler.insertOrder("PJZGDwAAQBAJ", 2, "Computers", 5);
 //			 DBHandler.insertOrder("RMNiDwAAQBAJ", 1, "Computers", 3);
@@ -39,7 +44,9 @@ public class Main {
 //			 String orders = DBHandler.getOrdersByUserId(1);
 //			 System.out.println(orders);
 			
-			DBHandler.updateOrderReview(4, 3, "Easy to read.");
+//			DBHandler.updateOrderReview(4, 3, "Easy to read.");
+			
+//			System.out.println(DBHandler.getReviewsByBookId("CpXeKjZN7ZAC"));
 			
 			// OK SearchImpl searchImpl = new SearchImpl();
 			// OK String book = searchImpl.getBooksRecommendation("Fiction");
@@ -51,7 +58,7 @@ public class Main {
 			System.out.println("STACK TRACE:");
 			e.printStackTrace();
 		}
-		*/
+		
 		
 	}
 }

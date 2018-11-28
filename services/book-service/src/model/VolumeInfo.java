@@ -53,4 +53,7 @@ public class VolumeInfo {
 		return averageRating;
 	}
 	
+	public void setAverageRating(Float rating) {
+		averageRating = rating;
+	}
 }

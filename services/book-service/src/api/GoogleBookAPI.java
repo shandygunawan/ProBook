@@ -38,6 +38,10 @@ public class GoogleBookAPI {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			ArrayList<Book> book_list = (gson.fromJson(str_booklist, BookList.class)).getBookList();
 			
+			for(Book book : book_list) {
+				book.getVolInfo().setAverageRating(DBHandler.getAverageRatingByBookId(book.getId()));
+			}
+			
 			// Fetch data to local DB
 			DBHandler.fetchPricesFromGoogleApi(book_list);
 			

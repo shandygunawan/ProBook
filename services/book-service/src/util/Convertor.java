@@ -13,6 +13,7 @@ public class Convertor {
             JSONObject obj = new JSONObject();
             obj.put("OrderId", resultSet.getInt("OrderId"));
             obj.put("BookId", resultSet.getString("BookId"));
+            obj.put("UserId", resultSet.getInt("UserId"));
             obj.put("Category", resultSet.getString("Category"));
             obj.put("Amount", resultSet.getInt("Amount"));
             obj.put("OrderTime", resultSet.getString("OrderTime"));

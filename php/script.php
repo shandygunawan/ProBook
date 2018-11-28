@@ -320,5 +320,30 @@
                         echo "<tr><td></td></tr>";
                   }
             }
+            else {
+                  echo "<tr> <td> <h3> There is no recommendation for this book. </h3>";
+            }
+      }
+
+      function printReviewList($review_list){
+            GLOBAL $db_handler;
+            if(count($review_list) > 0){
+                  foreach($review_list as $review){
+                        $user_info = $db_handler->getUserByID($review->UserId)[0];
+                        echo "<tr> <td style='vertical-align:top; width:80px;'>";
+                        echo "<img src='..". $user_info->PicturePath. "' class='squareImageSmall' style='border: 1px solid black;'></img>";
+                        echo "</td> <td style='vertical-align:top;'>";
+                        echo "<span style='padding-left:5px;' class='reviewUsername'>@". $user_info->Username. "</span>" ; echo "<br>";
+                        echo "<p style='text-align:justify;padding-left:7px; margin-top:5px'>" . $review->Comment . "</p>"; echo "<br>";
+                        echo "</td><td style='text-align:center; vertical-align:center; float:right;'>";
+                        echo "<img src='../asset/star_rounded.png' class='squareImageSuperSmall'></img><br>";
+                        echo $review->Score.'.0/5.0';
+                        echo "</td></tr>";
+                        echo "<tr><td></td></tr>";
+                  }
+            }
+            else {
+                  echo "<tr> <td> <h3> There is no review for this book. </h3>";
+            }
       }
 ?>

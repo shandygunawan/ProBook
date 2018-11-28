@@ -21,7 +21,6 @@
 		$result = $client_search->call('getBookDetails', array('id'=>$_GET['book_id']));
 		$book_info = json_decode($result);
 
-		console_log($book_info);
 
 		$rec_list = [];
 
@@ -30,7 +29,8 @@
 			array_push($rec_list, json_decode($result));
 		}
 
-		console_log($rec_list);
+		$result = $client_order->call('getReviewsByBookId', array('book_id'=>$_GET['book_id']));
+		$review_list = json_decode($result);
 	}
 ?>
 
@@ -58,7 +58,7 @@
 				<td style='vertical-align: top; padding-top: 2%; text-align: center;'>
 					<img src='<?php echo $book_info->volumeInfo->imageLinks->thumbnail ?>' class='squareImageMedium paddingLeftSmall'>
 					<br>
-					<img src='../asset/rating/<?php 
+					<img src='../asset/rating/<?php
 						if(isset($book_info->volumeInfo->averageRating)){
 							echo floor($book_info->volumeInfo->averageRating);	
 						}
@@ -128,7 +128,7 @@
 		<p></p>
 		<h2 style='margin-bottom:5px'>Reviews</h2>
 		<table style='width:100%'>
-			
+		<?php printReviewList($review_list) ?>
 		</table>
 	</div>
 

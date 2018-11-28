@@ -40,28 +40,12 @@ public class Order_cks {
      */
     @WebMethod(operationName = "orderBook")
     public String orderBook(@WebParam(name = "book") String book_id, @WebParam(name="jumlah")int jumlah, @WebParam(name="rekening") String rekening, @WebParam(name="category") String category, @WebParam(name="harga") double harga) throws IOException  {
-        String url = "http://localhost:8081/transfer";
+        String url = "http://localhost:8080/transfer";
         double transfer_temp = jumlah * harga;
         String transfer_amount = Double.toString(transfer_temp);
         String body = "src_number="+rekening+"&dst_number=1&amount="+transfer_amount;
-        URL link = new URL(url);
-        HttpURLConnection connection =  (HttpURLConnection) link.openConnection();
-        connection.setRequestMethod("POST");
-        connection.setDoOutput(true);
-        DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
-        wr.writeBytes(body);
-        wr.flush();
-        wr.close();
-        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String input;
-        StringBuffer response = new StringBuffer();
         
-        while ((input = in.readLine()) != null){
-            response.append(input);
-        }
-        in.close();
-        JSONObject data = new JSONObject(response.toString());
-        String response_data = data.getString("response");
+        response_data = NetworkHandler.httpConPost(url)
         
         if (response_data.equals("Transaction success")){
             try {
