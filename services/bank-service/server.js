@@ -11,6 +11,7 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+
 // connection configurations
 const mc = mysql.createConnection({
     host: 'localhost',
@@ -19,15 +20,36 @@ const mc = mysql.createConnection({
     database: 'bank'
 });
 
+
 // connect to database
 mc.connect();
 
+
 // Enable CORS
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
 });
+
+
+// Helper functions
+let getBalance = (card_number, callback) => {
+    mc.query('SELECT balance FROM cards where card_number=?', [card_number], function (error, result, field) {
+        if (error) {
+            throw error;
+        }
+        callback(result[0].balance);
+    });
+}
+
+let updateBalance = (card_number, amount) => {
+    mc.query('UPDATE cards SET balance=? where card_number=?', [amount, card_number], function (error, result, field) {
+        if (error) {
+            throw error;
+        }
+    });
+}
 
 
 // routes
@@ -37,8 +59,6 @@ app.get('/', function (req, res) {
 
 app.post('/validate', function (req, res) {
     let card_number = req.body.card_number;
-
-    console.log(req.body.card_number);
     
     mc.query('SELECT * FROM cards where card_number=?', [card_number], function (error, results, fields) {
         if (error) {
@@ -56,54 +76,51 @@ app.post('/validate', function (req, res) {
 });
 
 app.post('/transfer', function (req, res) {
-    let src_number = req.body.src_number;
-    let dst_number = req.body.dst_number;
-    let amount = req.body.amount;
-    
-    mc.query('SELECT balance FROM cards where card_number=?', [src_number], function (error, results, fields) {
-        if (error) {
-            return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
-        }
-        else {
-            if (results[0].balance > amount) {
-                let new_src_amt = results[0].balance - amount;
-                mc.query('UPDATE cards SET balance=? where card_number=?', [new_src_amt, src_number], function (error, results, fields) {
-                    if (error) {
-                        return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
-                    }
-                    else {
-                        mc.query('SELECT balance FROM cards where card_number=?', [dst_number], function (error, results1, fields) {
-                            if (error) {
-                                return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
-                            }
-                            else {
-                                let new_dst_amt = parseInt(results1[0].balance) + parseInt(amount);
-                                console.log(results1[0].balance);
-                                mc.query('UPDATE cards SET balance=? where card_number=?', [new_dst_amt, dst_number], function (error, results, fields) {
-                                    if (error) {
-                                        return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
-                                    }
-                                    else {
-                                        mc.query('INSERT INTO transactions SET ?', {sender: src_number, receiver: dst_number, amount: amount}, function (error, results2, fields) {
-                                            if (error) {
-                                                return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
-                                            }
-                                            else {
-                                                return res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Transaction success' }));
-                                            }
-                                        });
-                                    }
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-            else {
-                return res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Insufficient balance' }));
-            }
-        }
-    });
+    try {
+        let src_number = req.body.src_number;
+        let dst_number = req.body.dst_number;
+        let amount = req.body.amount;
+
+        /*
+        * Enclosing all processes in getBalance function, why? callback hell.
+        * It looks like this because of all those javascript asynchronous bullshits
+        * This is the best I could do so far --dion
+        * TODO: Device a closure function(?) so that the job of getBalance function
+        *   is only to set a variable value with a card's balance.
+        */
+        getBalance(src_number, function (result) {
+            var src_balance;
+            src_balance = result;
+            
+            getBalance(dst_number, function (result) {
+                var dst_balance;
+                dst_balance = result;
+                
+                if (src_balance > amount) {
+                    let new_src_amt = parseInt(src_balance) - parseInt(amount);
+                    let new_dst_amt = parseInt(dst_balance) + parseInt(amount);
+                    
+                    updateBalance(src_number, new_src_amt);
+                    updateBalance(dst_number, new_dst_amt);
+                    
+                    mc.query('INSERT INTO transactions SET ?', { sender: src_number, receiver: dst_number, amount: amount }, function (error, result, field) {
+                        if (error) {
+                            throw error;
+                        }
+                        else {
+                            return res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Transaction success' }));
+                        }
+                    });
+                }
+                else {
+                    return res.send(JSON.stringify({ "status": 200, "error": null, "response": 'Insufficient balance' }));
+                }
+            });
+        });
+    }
+    catch(error) {
+        return res.send(JSON.stringify({ "status": 500, "error": error, "response": null }));
+    }
 });
 
 // start the server
