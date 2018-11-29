@@ -11,10 +11,9 @@
       $cookie_interval = 6000; //per second; 600 = 10 minutes
 
       /* SOAP VARIABLES */ 
-      $port_search = "8081";
-      $port_order = "8082"; 
-      $wsdl_search = "http://localhost:".$port_search."/services/search?wsdl";
-      $wsdl_order = "http://localhost:".$port_order."/services/order?wsdl";
+      $port = "8080"; 
+      $wsdl_search = "http://localhost:".$port."/BookServices/SearchServices?wsdl";
+      $wsdl_order = "http://localhost:".$port."/BookServices/OrderServices?wsdl";
       $client_search = new nusoap_client($wsdl_search, 'wsdl');
       $client_order = new nusoap_client($wsdl_order, 'wsdl');
 

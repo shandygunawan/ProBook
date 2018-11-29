@@ -59,11 +59,12 @@ INSERT INTO `cards` (`id`, `card_number`, `balance`) VALUES
 
 DROP TABLE IF EXISTS transactions;
 CREATE TABLE `transactions` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `sender` varchar(20) NOT NULL,
   `receiver` varchar(20) NOT NULL,
   `amount` int(11) NOT NULL,
-  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY(`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
