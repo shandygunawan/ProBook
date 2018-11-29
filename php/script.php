@@ -302,20 +302,40 @@
             }
       }
 
+      function printAuthors($authors){
+            if(isset($authors)){
+                  echo implode(', ', $authors);
+            }
+            else {
+                  echo "No description of author(s).";
+            }
+      }
+
+      function printDescription($desc){
+            if(isset($desc)) {
+                  echo $desc;
+            }
+            else {
+                  echo "Description is unavailable.";
+            }
+      }
+
       function printRecommendationList($rec_list){
             if(count($rec_list) > 0){
                   foreach($rec_list as $book){
-                        echo "<tr> <td style='vertical-align:top; width:80px;'>";
-                        echo "<img src='". $book->volumeInfo->imageLinks->thumbnail. "' class='squareImageSmall' style='border: 1px solid black;'></img>";
-                        echo "</td> <td style='vertical-align:top;'>";
-                        echo "<span style='padding-left:5px;' class='reviewUsername'>". $book->volumeInfo->title. "</span>" ; echo "<br>";
-                        echo "<span style='text-align:justify;padding-left:7px; margin-top:5px'>" .  implode(', ', $book->volumeInfo->authors). "</span>"; echo "<br>";
-                        echo "<form action='' method='get'>";
-                        echo "<input type='hidden' name='book_id' id='book_id' value='".$book->id."'>";
-                        echo "<input type='submit' value='Detail' class='buttonStyleBlueWide'>";
-                        echo "</form>";
-                        echo "</td></tr>";
-                        echo "<tr><td></td></tr>";
+                        if(isset($book)){
+                              echo "<tr> <td style='vertical-align:top; width:80px;'>";
+                              echo "<img src='". $book->volumeInfo->imageLinks->thumbnail. "' class='squareImageSmall' style='border: 1px solid black;'></img>";
+                              echo "</td> <td style='vertical-align:top;'>";
+                              echo "<span style='padding-left:5px;' class='reviewUsername'>". $book->volumeInfo->title. "</span>" ; echo "<br>";
+                              echo "<span style='text-align:justify; padding-left:10px; margin-top:5px'>" . printAuthors($book->volumeInfo->authors) . "</span>"; echo "<br>";
+                              echo "<form action='' method='get'>";
+                              echo "<input type='hidden' name='book_id' id='book_id' value='".$book->id."'>";
+                              echo "<input type='submit' value='Detail' class='buttonStyleBlueWide'>";
+                              echo "</form>";
+                              echo "</td></tr>";
+                              echo "<tr><td></td></tr>";
+                        }
                   }
             }
             else {

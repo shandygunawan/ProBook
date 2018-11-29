@@ -2,6 +2,8 @@
 	include($_SERVER['DOCUMENT_ROOT'].'/php/script.php');
 	// require_once($_SERVER['DOCUMENT_ROOT'].'/php/nusoap-0.9.5/lib/nusoap.php');
 
+	// error_reporting(0);
+
 	if(!checkActiveUser()) {
 		clearAllCookies();
 		header('Location: '. 'login.php');
@@ -22,12 +24,20 @@
 		$book_info = json_decode($result);
 		console_log($book_info);
 
+		if(!isset($book_info)){
+			header('Location: '. "construction.php");
+		}
+
 		$rec_list = [];
 
 		foreach($book_info->volumeInfo->categories as $category) {
 			$result = $client_search->call('getBookRecommendation', array('category'=>$category));
-			array_push($rec_list, json_decode($result));
+			if(isset($result)){
+				array_push($rec_list, json_decode($result));
+			}
 		}
+
+		console_log($rec_list);
 
 		$result = $client_order->call('getReviewsByBookId', array('book_id'=>$_GET['book_id']));
 		$review_list = json_decode($result);
@@ -51,8 +61,8 @@
 			<tr>
 				<td style='vertical-align: top;'>
 					<h1 id='book_title' style='margin-bottom: -5px'><?php echo $book_info->volumeInfo->title; ?></h1>
-					<span id='book_author' style='font-size: 20px'><?php echo implode(', ', $book_info->volumeInfo->authors); ?></span>
-					<p id='book_synopsis' style='text-align: justify;'><?php echo $book_info->volumeInfo->description;?></p>
+					<span id='book_author' style='font-size: 20px'><?php echo printAuthors($book_info->volumeInfo->authors); ?></span>
+					<p id='book_synopsis' style='text-align: justify;'><?php printDescription($book_info->volumeInfo->description);?></p>
 				</td>
 
 				<td style='vertical-align: top; padding-top: 2%; text-align: center;'>
