@@ -29,4 +29,16 @@ CREATE TABLE AccessToken
   FOREIGN KEY (UserID) REFERENCES User(UserID)
 );
 
+/* Create Table for Access token for Google Sign in */
+DROP TABLE IF EXISTS AccessTokenGoogle;
+CREATE TABLE AccessTokenGoogle
+(
+  TokenID VARCHAR(10) NOT NULL,
+  ExpiryTime DATETIME NOT NULL,
+  Browser TEXT NOT NULL,
+  IpAddress TEXT NOT NULL,
+  UserID VARCHAR(255) NOT NULL,
+  PRIMARY KEY (TokenID)
+);
+
 INSERT INTO User(Name, Username, Email, Password, Address, PhoneNumber, CardNumber, PicturePath) VALUES ("Shandy Gunawan", "higgsfield", "shandy.gunawan@rocketmail.com", "shandygunawan", "Cisitu", "08989898797", "1234123412341234", "/asset/user_img/higgsfield.jpg");

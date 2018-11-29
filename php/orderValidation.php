@@ -1,34 +1,33 @@
 <?php
-	
 	include("script.php");
-	include("db.php");
 
 	if( isset($_POST['amount']) && isset($_POST['user_id']) && isset($_POST['book_id']) ){
 		$amount = $_POST['amount'];
 		$user_id = $_POST['user_id'];
 		$book_id = $_POST['book_id'];
 
-		console_log($_POST['amount']);
-		console_log($_POST['user_id']);
-		console_log($_POST['book_id']);
 
-		$order = new stdClass;
-		$order->Amount = $amount;
-		$order->UserID = $user_id;
-		$order->BookID = $book_id;
-		$order->OrderDate = date("Y-m-d");
-		$order->Score = null;
-		$order->Comment = null;
+		$user_info = $db_handler->getUserByID($_POST['user_id'])[0];
+		$card_number = $user_info->CardNumber;
 
-		$dbHandler = new Database("localhost", "root", "", $dbName);
-		$dbHandler->addOrder($order);
+		$response = $client_search->call('getBookDetails', array('id'=>$book_id));
+		$book_info = json_decode($response);
+		$category = $book_info->volumeInfo->categories[0];
+		$price = $book_info->saleInfo->retailPrice->amount;
+		
+		$response = $client_order->call('orderBook', array('book_id'=>$book_id,'user_id'=>$user_id,'jumlah'=>$amount, 'rekening'=>$card_number,'category'=>$category, 'harga'=>$price));
 
-		$order_id = $dbHandler->getBookOrder($_POST['user_id']);
-
-		echo $order_id[0]->OrderID;
+		if ($response == "success"){
+			$order_id = $client_order->call('getNewestOrderByUserId', array('user_id'=>$user_id));
+			echo $order_id;
+		}
+		else {
+			echo "Database Insertion fail.";
+		}
+		
 	}
 	else {
-		echo "fail";
+		echo "HTTP fail";
 	}
 	
 ?>

@@ -44,7 +44,7 @@ public class NetworkHandler {
         connection.setDoOutput(true);
         DataOutputStream wr = new DataOutputStream(connection.getOutputStream());
         wr.writeBytes(body);
-	wr.flush();
+        wr.flush();
         wr.close();
         BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
         String input;

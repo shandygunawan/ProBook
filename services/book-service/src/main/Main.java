@@ -13,7 +13,7 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		/*
+		
 		try {
 			Endpoint.publish("http://localhost:8081/services/search", new SearchImpl());
 			Endpoint.publish("http://localhost:8082/services/order", new OrderImpl());
@@ -22,14 +22,16 @@ public class Main {
 		catch(Exception e) {
 			e.printStackTrace();
 		}
-		*/
+		
 		
 		
 		
 		try {
 			
-			OrderImpl orderImpl = new OrderImpl();
-			orderImpl.orderBook("CpXeKjZN7ZAC", 1, 5, "1234123412341234", "Computers", 50000.00);
+//			OrderImpl orderImpl = new OrderImpl();
+//			String result = orderImpl.getNewestOrderByUserId(2);
+//			System.out.println(result);
+//			orderImpl.orderBook("CpXeKjZN7ZAC", 3, 2, "1234123412341234", "Computers", 1000.00);
 			
 //			Float rating = DBHandler.getAverageRatingByBookId("PJZGDwAAQBAJ");
 //			System.out.println(rating.toString());

@@ -29,6 +29,10 @@ public class VolumeInfo {
 	@Expose
 	private Float averageRating;
 	
+	@SerializedName("reviewCount")
+	@Expose
+	private Integer reviewCount;
+	
 	public String getTitle() {
 		return title;
 	}
@@ -55,5 +59,13 @@ public class VolumeInfo {
 	
 	public void setAverageRating(Float rating) {
 		averageRating = rating;
+	}
+	
+	public Integer getReviewCount() {
+		return reviewCount;
+	}
+	
+	public void setReviewCount(Integer count) {
+		reviewCount = count;
 	}
 }

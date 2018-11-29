@@ -6,6 +6,7 @@
 		private $reviewTable = "BookOrder";
 		private $orderTable = "BookOrder";
 		private $tokenTable = "AccessToken";
+		private $tokenGoogleTable = "AccessTokenGoogle";
 		private $userPicPath = "/asset/user_img/";
 		private $bookPicPath = "/asset/book_img/";
 
@@ -64,6 +65,12 @@
 		// Add new token
 		public function addToken($token) {
 			$query = "INSERT INTO $this->tokenTable VALUES(:TokenID, :ExpiryTime, :Browser, :IpAddress, :UserID);";
+			$this->runQuery($query, $token);
+		}
+
+		// Add new token
+		public function addTokenGoogle($token) {
+			$query = "INSERT INTO $this->tokenGoogleTable VALUES(:TokenID, :ExpiryTime, :Browser, :IpAddress, :UserID);";
 			$this->runQuery($query, $token);
 		}
 

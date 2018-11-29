@@ -20,7 +20,7 @@
 
 		$result = $client_search->call('getBookDetails', array('id'=>$_GET['book_id']));
 		$book_info = json_decode($result);
-
+		console_log($book_info);
 
 		$rec_list = [];
 
@@ -38,7 +38,7 @@
 <html lang='en'>
 
 <head>
-	<title>Book Detail</title>
+	<title><?php echo $book_info->volumeInfo->title; ?></title>
 	<?php require($_SERVER['DOCUMENT_ROOT'].'/includes/page_header.php'); ?>
 </head>
 
@@ -90,8 +90,9 @@
 					"
 					<form method='post'>
 						<tr>
-							<td> Jumlah: 
-								<select id='order_amount'>
+							<td> 
+								Amount: 
+								<select id='order_amount' onchange='updateOrderPrice(this.value, ".$book_info->saleInfo->retailPrice->amount.")'>
 									<option value='1'>1</option>
 									<option value='2'>2</option>
 									<option value='3'>3</option>
@@ -103,6 +104,8 @@
 									<option value='9'>9</option>
 									<option value='10'>10</option>
 								</select>
+								&nbsp;&nbsp;&nbsp;
+								Price : <span id='order_price'> <script> document.write(formatter.format(".$book_info->saleInfo->retailPrice->amount.")) </script> </span>
 							</td>
 						</tr>
 						<tr>
@@ -110,7 +113,7 @@
 							<td>
 								<input type='hidden' name='user_id' id='user_id' value='".$_COOKIE['user_id']."'>
 								<input type='hidden' name='book_id' id='book_id' value='".$book_info->id."'>
-								<input type='button' value='Order' class='buttonStyleBlueWide' style='float: right;' onclick='return orderBook(".$_COOKIE['user_id'].",".$book_info->id.")'>
+								<input type='button' value='Order' class='buttonStyleBlueWide' style='float: right;' onclick='return orderBook(".$_COOKIE['user_id'].", \"".$book_info->id."\")'>
 							</td>
 						</tr>
 					</form> 
@@ -142,11 +145,11 @@
 				<tr><td></td></tr>
 				<tr>
 					<td style='vertical-align: center'>
-						<img style='width:30px;height:20px; text-align: center;' src='../asset/check_black.png'>
+						<img style='width:30px;height:20px; text-align: center;' id='transaction_status_icon'>
 					</td>
 					<td>
-						<span style='font-weight: bolder; font-size: 14px'>Pemesanan Berhasil!</span> <br>
-						<span style='font-weight: lighter; font-size:12px'>Nomor Transaksi : <span id='latest_order_id'></span> </span>
+						<span style='font-weight: bolder; font-size: 14px' id='transaction_status'>Pemesanan Berhasil!</span> <br>
+						<span style='font-weight: lighter; font-size:12px' id='transaction_message'></span>
 					</td>
 				</tr>
 			</table>

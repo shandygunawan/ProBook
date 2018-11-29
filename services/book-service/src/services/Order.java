@@ -19,6 +19,9 @@ public interface Order {
 	public String getOrdersByUserId(@WebParam(name = "user_id") Integer user_id) throws Exception;
 	
 	@WebMethod
+	public String getNewestOrderByUserId(@WebParam(name = "user_id") Integer user_id) throws Exception;
+	
+	@WebMethod
 	public String getReviewsByBookId(@WebParam(name = "book_id") String book_id) throws Exception;
 	
 	@WebMethod

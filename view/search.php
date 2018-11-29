@@ -21,7 +21,7 @@
 <body>
 	<div id="bodyPage" class="paddingLeftLarge paddingRightLarge fadeIn" ng-app="searchApp" ng-controller="searchController">
 		<div ng-include="'/view/angular/search_bar.html'"></div>
-		<h3 id="waiting_text"></h3>
+		<div class="loader" id="loading_circle" style='display:none;margin-left:auto; margin-right:auto;'></div>
 		<div ng-include="'/view/angular/search_result.html'"></div>
 	</div>
 

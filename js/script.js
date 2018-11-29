@@ -1,3 +1,9 @@
+const formatter = new Intl.NumberFormat('de-DE', {
+  style: 'currency',
+  currency: 'IDR',
+  minimumFractionDigits: 2
+})
+
 function overlayOn() {
     document.getElementById("overlay").style.display = "block";
 }
@@ -7,7 +13,17 @@ function overlayOff() {
 }
 
 function showOrderPopUp(orderid){
-	document.getElementById("latest_order_id").innerHTML = orderid;
+	
+	if(orderid == "Database Insertion fail."){
+		document.getElementById("transaction_status_icon").src = "../asset/exit_black.png";
+		document.getElementById("transaction_status").innerHTML = "Order Failed!";	
+		document.getElementById("transaction_message").innerHTML = "Your account's balance may be not sufficient.";	
+	} else {
+		document.getElementById("transaction_status_icon").src = "../asset/check_black.png";
+		document.getElementById("transaction_status").innerHTML = "Order Successful!";	
+		document.getElementById("transaction_message").innerHTML = "Order Number : " + orderid;	
+	}
+	
 	overlayOn();
 }
 
@@ -56,4 +72,8 @@ function ArraytoString(arr_param){
 	}
 
 	return str_array;
+}
+
+function updateOrderPrice(amount, price) {
+	document.getElementById("order_price").innerHTML = formatter.format(amount*price);
 }

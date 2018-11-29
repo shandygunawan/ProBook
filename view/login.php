@@ -71,8 +71,6 @@
 		<p></p>
 		<input type="submit" value="LOGIN" class="buttonStyleOrange" name="LoginButton" id="LoginButton" onclick="return checkLoginForm()" style="margin:0 auto;display:block;">
 	</form>
-	<br>
-	<div class="g-signin2" data-onsuccess="onSignIn" align="center"></div>
 	</div>
 
 </body>

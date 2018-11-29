@@ -40,6 +40,7 @@ public class GoogleBookAPI {
 			
 			for(Book book : book_list) {
 				book.getVolInfo().setAverageRating(DBHandler.getAverageRatingByBookId(book.getId()));
+				book.getVolInfo().setReviewCount(DBHandler.getReviewsCountByBookId(book.getId()));
 			}
 			
 			// Fetch data to local DB
@@ -99,6 +100,7 @@ public class GoogleBookAPI {
 			Gson gson = new GsonBuilder().setPrettyPrinting().create();
 			Book book = gson.fromJson(str_bookDetails, Book.class);
 			
+			book.getVolInfo().setAverageRating(DBHandler.getAverageRatingByBookId(book.getId()));
 			
 			return (gson.toJson(book).toString());
 		}

@@ -16,7 +16,7 @@
 					<span class='bookTitleList'> {{book.volumeInfo.title}} </span>
 					<br>
 					<span style='padding-left:10px;'> {{book.volumeInfo.authors.join(", ")}} </span>
-					&nbsp;- <span>{{checkAverageRating(book.volumeInfo)}}</span>
+					&nbsp;- <span>{{checkAverageRating(book.volumeInfo)}} / 5.0 - {{book.volumeInfo.reviewCount}} vote(s)</span>
 					<br>
 					<p style='padding-left:10px; text-align:justify;'> {{checkDescription(book.volumeInfo)}} </p>
 					<br>

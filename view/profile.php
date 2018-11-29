@@ -17,7 +17,7 @@
 <html lang="en">
 
 <head>
-	<title>Profile</title>
+	<title><?php echo $user_info->Username ?>'s Profile</title>
 	<?php require($_SERVER['DOCUMENT_ROOT']."/includes/page_header.php"); ?>
 </head>
 

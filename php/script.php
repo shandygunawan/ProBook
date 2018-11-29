@@ -60,8 +60,6 @@
                   /* If cookie's id is not exist -> return false */
                   if(count($db_handler->getUserByID($_COOKIE["user_id"])) == 1){
                         console_log("Cookie valid");
-                        console_log($_COOKIE["user_id"]);
-                        console_log($_COOKIE["username"]);
                         return true;
                   }
             }
@@ -70,6 +68,7 @@
       }
 
       /*********************** ACCESS TOKEN **************************/
+
       function assignToken($user_id){
             GLOBAL $db_handler;
             GLOBAL $token_interval;
@@ -84,7 +83,7 @@
                   date_default_timezone_set("Asia/Jakarta");
                   $dt = new DateTime();
                   $dt->modify($token_interval);
-
+                  
                   $token = new stdClass;
                   $token->TokenID = generateToken(10);
                   $token->ExpiryTime = $dt->format("Y-m-d H:i:s");

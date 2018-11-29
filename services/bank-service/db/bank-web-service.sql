@@ -63,7 +63,7 @@ CREATE TABLE `transactions` (
   `sender` varchar(20) NOT NULL,
   `receiver` varchar(20) NOT NULL,
   `amount` int(11) NOT NULL,
-  `created_at` DATETIME NOT NULL
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --

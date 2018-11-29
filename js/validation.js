@@ -165,7 +165,7 @@ function validateCardNumber(number){
 		}
 
 	}
-	xmlhttp.open("POST", "http://127.0.0.1:8080/validate", false); //false = synchronous, supaya ga kebablasan jalan ke alert("username/password inccorrect")
+	xmlhttp.open("POST", "http://127.0.0.1:8083/api/v1/check-validity", false); //false = synchronous, supaya ga kebablasan jalan ke alert("username/password inccorrect")
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send("card_number=" + number);
 }
@@ -216,56 +216,11 @@ function validate(field, query){
 		}
 	}
 
-	xmlhttp.open("POST", "../php/validation.php", true);
+	xmlhttp.open("POST", "../php/registervalidation.php", true);
 	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	xmlhttp.send("field=" + field + "&query=" + query);
 }
 
-function onSignIn(googleUser) {
-  	var profile = googleUser.getBasicProfile();
-  	console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-  	console.log('Name: ' + profile.getName());
-  	console.log('Image URL: ' + profile.getImageUrl());
-  	console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
-	var xmlhttp = new XMLHttpRequest();
-
-	xmlhttp.onreadystatechange = function(){
-
-		// console.log("state : " + xmlhttp.readyState);
-		// console.log("status: " + xmlhttp.status);
-
-		if(xmlhttp.readyState != 4 && xmlhttp.status == 200){
-			console.log("Validating");
-
-		}
-		else if(xmlhttp.readyState === 4 && xmlhttp.status == 200){
-			console.log(xmlhttp.responseText);
-
-			if(xmlhttp.responseText === "valid"){
-				isValidLogin = true;
-				console.log("isValidLoginXML : " + isValidLogin);
-			}
-
-		}
-		else{
-			console.log("error");
-			// document.getElementById(field).innerHTML = "Error Occured."
-		}
-
-	}
-	xmlhttp.open("POST", "../php/googleLoginValidation.php", false); //false = synchronous, supaya ga kebablasan jalan ke alert("username/password inccorrect")
-	xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	xmlhttp.send("id=" + profile.getId() + "&username=" + profile.getName());
-  
-}
-
-function signOut() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    auth2.signOut().then(function () {
-      console.log('User signed out.');
-    });
-}
 
 // =========================================================
 //                    		SEARCH

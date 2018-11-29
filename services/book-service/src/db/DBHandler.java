@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
@@ -131,6 +132,24 @@ public class DBHandler {
 		
 	}
 	
+	public static String getNewestOrderByUserId(Integer user_id) throws SQLException {
+		Connection conn = getConnection();
+		
+		String query = "SELECT * FROM " + DBHandler.TABLE_ORDER + " WHERE UserId = ?"
+				+ " ORDER BY OrderTime DESC LIMIT 1;";
+		
+		// Prepare statement and get query's result
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setInt(1, user_id);
+		ResultSet result = stmt.executeQuery();
+		
+		if(result.next()) {
+			 return result.getString("OrderId");
+		}
+		
+		return null;
+	}
+	
 	public static String getReviewsByBookId(String book_id) throws SQLException {
 		Connection conn = getConnection();
 		
@@ -139,7 +158,6 @@ public class DBHandler {
 		// Prepare statement and get query's result
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.setString(1, book_id);
-		System.out.println(stmt.toString());
 		ResultSet result = stmt.executeQuery();
 		
 		try {
@@ -154,6 +172,23 @@ public class DBHandler {
 		}
 	}
 	
+	public static Integer getReviewsCountByBookId(String book_id) throws SQLException {
+Connection conn = getConnection();
+		
+		String query = "SELECT COUNT(OrderId) as reviewCount FROM " + DBHandler.TABLE_ORDER + " WHERE BookId = ? AND Score IS NOT NULL";
+		
+		// Prepare statement and get query's result
+		PreparedStatement stmt = conn.prepareStatement(query);
+		stmt.setString(1, book_id);
+		ResultSet result = stmt.executeQuery();
+		
+		if(result.next()) {
+			 return result.getInt("reviewCount");
+		}
+		
+		return null;
+	}
+	
 	public static Float getAverageRatingByBookId(String book_id) throws SQLException {
 		Connection conn = getConnection();
 		
@@ -162,11 +197,13 @@ public class DBHandler {
 		// Prepare statement and get query's result
 		PreparedStatement stmt = conn.prepareStatement(query);
 		stmt.setString(1, book_id);
-		System.out.println(stmt.toString());
 		ResultSet result = stmt.executeQuery();
 		
 		if(result.next()) {
-			return result.getFloat("AvgRating");
+			// round rating to 1 decimal place
+			Double avgRating = Math.round(result.getFloat("AvgRating") * 10.0)/10.0;
+			
+			return avgRating.floatValue();
 		}
 		
 		return null;
@@ -190,6 +227,9 @@ public class DBHandler {
         stmt.setString(3,category);
         stmt.setInt(4, amount);
         stmt.setString(5, current_time);
+        
+        System.out.println(stmt.toString());
+        
         stmt.executeUpdate();
         
         System.out.println("Insertion successful for BookId = " + book_id + ", UserId = " + user_id.toString() + ", Amount = " + amount.toString());

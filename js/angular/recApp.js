@@ -1,1 +1,0 @@
-var recApp = angular.module("recApp", []);
