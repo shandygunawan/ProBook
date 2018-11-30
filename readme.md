@@ -150,10 +150,13 @@ Anda tidak dituntut untuk mengerjakan ini. Fokus terlebih dahulu menyelesaikan s
     ![](temp/button_example.png)
 
 ## Pembagian Tugas
-"Gaji buta dilarang dalam tugas ini. Bila tak mengerti, luangkan waktu belajar lebih banyak. Bila belum juga mengerti, belajarlah bersama-sama kelompokmu. Bila Anda sekelompok bingung, bertanyalah (bukan menyontek) ke teman seangkatanmu. Bila seangkatan bingung, bertanyalah pada asisten manapun."
 
-*Harap semua anggota kelompok mengerjakan SOAP dan REST API kedua-duanya*. Tuliskan pembagian tugas seperti berikut ini.
+### Anggota Kelompok
+- Dionesius Agung Andika Perkasa : 13516043
+- Christian Kevin Saputra : 13516073
+- Shandy : 13516097
 
+### Pembagian Kerja:
 REST :
 1. Membuat model : 13516043
 2. Validasi nomor kartu : 13516043
