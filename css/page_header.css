@@ -1,0 +1,102 @@
+@import("normalize.css");
+
+.title {
+  font-size:40px;
+  font-weight: bold;
+  cursor:pointer;
+  padding-top: 10px;
+  padding-left: 10px;
+  color:white; 
+  text-decoration: none;
+}
+
+.logOutButton {
+  background-color: #F26600;
+  width:30px;
+  height:30px;
+  border:0;
+  cursor:pointer;
+  float:right;
+}
+
+/*.header {
+  overflow: hidden;
+  background-color: #00AEEF;
+}
+
+.header a {
+  float: left;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  font-size: 18px;
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  padding-top:10px;
+  padding-left:10px;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.header-right {
+  padding: 5px;
+  float: right;
+  background-color: #F26600;
+}
+
+.header-right:hover {
+  background-color: darkred;
+  color: black;
+}*/
+
+.header-btn-group .button {
+    background-color: #0094CC;
+    border: 0.5px solid black;
+    border-top:none;
+    border-bottom:none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: "Linotte Semi Bold";
+    font-size: 24px;
+    cursor: pointer;
+    float: left;
+}
+
+.header-btn-group .button:not(:last-child) {
+    border-right: none; /* Prevent double borders */
+}
+
+.header-btn-group .button:hover {
+    background-color: #F26600;
+}
+
+/* Style the active/current link*/
+.header-btn-group .button.active {
+  background-color: #F26600;
+  color: white;
+}
+
+/* Clear floats (clearfix hack) */
+.btn-group:after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  .header-right {
+    float: none;
+  }
+}

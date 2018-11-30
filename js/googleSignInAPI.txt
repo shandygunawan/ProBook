@@ -1,0 +1,3 @@
+client key: 1001089679311-4icnt83g9j7r755j5iatjpqvu6s21b9d.apps.googleusercontent.com
+client secret: qsuQmyLNoChYbiAyP0ChXZpK
+api key book services : AIzaSyC2Lvja_w2JU_xjvpxbOruClrtx3Mj0Ggc

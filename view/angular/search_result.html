@@ -1,0 +1,36 @@
+<div>
+	<h2 class="paddingTopLarge" id="search_result"></h2>
+	<span style="float:right; margin-top:-48px" id="found_books_count"></span>
+</div>
+
+<script src="/js/script.js"></script>
+<div>
+	<table id="book_table">
+		<tbody ng-repeat="book in book_list">
+			<tr>
+				<td style='vertical-align:top;'>
+						<img ng-src='{{book.volumeInfo.imageLinks.thumbnail}}' class='squareImageLarge'>
+				</td>
+				
+				<td style='vertical-align:top;'>
+					<span class='bookTitleList'> {{book.volumeInfo.title}} </span>
+					<br>
+					<span style='padding-left:10px;'> {{book.volumeInfo.authors.join(", ")}} </span>
+					&nbsp;- <span>{{checkAverageRating(book.volumeInfo)}} / 5.0 - {{book.volumeInfo.reviewCount}} vote(s)</span>
+					<br>
+					<p style='padding-left:10px; text-align:justify;'> {{checkDescription(book.volumeInfo)}} </p>
+					<br>
+				</td>
+			</tr>
+			<tr>
+				<td><td/>
+				<td>
+					<form action="detail.php" method="get">
+						<input type="hidden" id="book_id" name="book_id" value="{{book.id}}">
+						<input type="submit" value="Detail" class='buttonStyleBlueWide'>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
