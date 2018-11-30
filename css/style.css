@@ -1,0 +1,218 @@
+.rectLogin {
+	margin-left:-50px;
+	margin-right:-50px;
+	left:41%;
+	top:30%;
+	position:absolute;
+	width:300px;
+	height:200px;
+	background-color: white;
+}
+
+.rectRegister {
+	margin-left:-50px;
+	margin-right:-50px;
+	left:41%;
+	top:15%;
+	position:absolute;
+	width:350px;
+	height:380px;
+	background-color: white;	
+}
+
+.rectHeader {
+	position:relative;
+	margin-top:-8px;
+	margin-left:-8px;
+	padding-left:20px;
+	width:100%;
+	background-color:#00AEEF;
+	font-size:50px;
+}
+
+.clearfix {
+	overflow: auto;
+}
+
+.textSmall {
+	font-size:10px;
+}
+
+.paddingSmall {
+	padding:10px;
+}
+
+.tdName {
+	text-align:right;
+	vertical-align:top;
+}
+
+.buttonStyleOrange {
+	border-radius: 12px;
+	background-color: white;
+	border:2px solid orange;
+	color: orange;
+	font-size:20px;
+	cursor:pointer;
+}
+
+.buttonStyleOrange:hover {
+	background-color: lightgrey;
+}
+
+.buttonStyleBlueWide {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 30px;
+	padding-right: 30px;
+	border-radius: 8px;
+	background-color:#00AEEF;
+	color:white;
+	cursor:pointer;
+	font-size: 15px;
+}
+
+.buttonStyleBlueWide:hover {
+	background-color: #F26600;
+}
+
+.buttonStyleRedWide {
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-left: 30px;
+	padding-right: 30px;
+	border-radius: 8px;
+	background-color: white;
+	border:2px solid red;
+	color: red;
+	font-size:20px;
+	cursor:pointer;	
+}
+
+.buttonStyleRedWide:hover {
+	background-color: lightgrey;
+}
+
+.fontToLinotte {
+	font-family: "Linotte Semi Bold";
+}
+
+.paddingLeftSmall {
+	padding-left: 10px;
+}
+
+.paddingLeftLarge {
+	padding-left: 40px;
+}
+
+.paddingRightLarge {
+	padding-right: 40px;
+}
+
+.paddingTopLarge {
+	padding-top:5%;
+}
+
+.search_bar {
+	width:100%;
+	border-radius:5px;
+}
+
+.squareImageSuperSmall {
+	width:50px;
+	height:50px;
+}
+
+.squareImageSmall {
+	width:80px;
+	height:80px;
+}
+
+.squareImageMedium {
+	width:150px;
+	height:150px;
+}
+
+.squareImageLarge {
+	width:200px;
+	height:200px;	
+}
+
+.squareImageSuperLarge {
+	width:300;
+	height:300;	
+}
+
+.valignTop {
+	vertical-align: top;
+}
+
+.bookTitleList {
+	font-size: 25px;
+	color: #F26600;
+	padding-left: 10px;
+}
+
+.reviewUsername {
+	font-size:20px;
+	margin-bottom:-10px;
+	font-weight: bold;
+	color:#4D4D4D;
+}
+
+.rectProfile {
+	border:0;
+	height:610px;
+	width:100%;
+	background-color:#00374C;
+	font-size:50px;
+}
+
+.tblfont {
+	font-size:20px;
+	color:#585858;
+}
+
+.roundimg {
+	border-radius:100%;
+	border: 20px solid yellow;
+	text-align:center;
+}
+
+#profilepict {
+	margin-top:-75px;
+	position:relative;
+}
+
+.paddingTopMedium {
+	padding-top:5px;
+}
+
+.profilename {
+	font-size:64pt;
+	color:white;
+}
+
+#overlay {
+    position: fixed; /* Sit on top of the page content */
+    display: none; /* Hidden by default */
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0; 
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5); /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+}
+
+#overlay_popup{
+ 	margin-left:-50px;
+	margin-right:-50px;
+	left:45%;
+	top:40%;
+	position:absolute;
+	width:200px;
+	height:100px;
+	background-color: white;   
+}
