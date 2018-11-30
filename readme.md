@@ -17,14 +17,14 @@ Melakukan *upgrade* Website toko buku online pada Tugas 1 dengan mengaplikasikan
     * **Basis data *web service* bank**:
         * Basis data untuk *web service* bernama *bank* yang juga mempunyai 2 tabel, yakni tabel *cards* ([Cards]) dan tabel *transactions* ([transactions]). [Cards] berfungsi untuk menampung nomor kartu yang dapat digunakan pengguna beserta saldo masing-masing kartu. [Transactions] berfungsi untuk menyimpan informasi transaksi yang telah dilakukan, dalam hal ini adalah transfer uang dari rekening pengguna ke rekening aplikasi saat pengguna membeli buku.
         * Berikut adalah model tabel pada basis data (atribut tebal menunjukkan *primary key*):
-         * Cards = (**id**, card_number, balance)
-         * Transactions = (**id**, sender, receiver, amount, created_at)
+            * Cards = (**id**, card_number, balance)
+            * Transactions = (**id**, sender, receiver, amount, created_at)
 
-2. **Konsep *shared session* menggunakan REST**:
-   * REST pada dasarnya adalah *stateless* sehingga *client session* tidak disimpan di server REST melainkan di *cookies* masing-masing *client*. Oleh karena itu, REST melakukan metode yang bernama *state transfer* untuk meng-*handle* banyak *session*. Metode ini yakni REST tidak menyimpan *state* masing-masing *client* melainkan hanya memberikan *state* baru atau transisi *state* ke masing-masing *client*. Oleh karena itu, REST bisa di-*scale* hingga jutaan *client* secara konkuren.
+2. **Konsep *shared session* menggunakan REST**: <br>
+REST pada dasarnya adalah *stateless* sehingga *client session* tidak disimpan di server REST melainkan di *cookies* masing-masing *client*. Oleh karena itu, REST melakukan metode yang bernama *state transfer* untuk meng-*handle* banyak *session*. Metode ini yakni REST tidak menyimpan *state* masing-masing *client* melainkan hanya memberikan *state* baru atau transisi *state* ke masing-masing *client*. Oleh karena itu, REST bisa di-*scale* hingga jutaan *client* secara konkuren.
 
-3. **Mekanisme pembangkitan *token* dan *expiry time***:
- * *Access token* yang didapatkan dan digunakan pengguna dibangkitkan saat pengguna berhasil melakukan *login* pada aplikasi. String token di-*generate* secara acak sepanjang 10 huruf. String token kemudian diberikan ke klien dalam bentuk *cookie* sehingga token akan disimpan oleh browser klien. Informasi mengenai token juga akan disimpan ke dalam basis data server disertai dengan informasi tambahan, seperti *IP address*, Jenis browser, dan *expiry time*. *Expiry time* token yakni selama 1 jam sejak klien berhasil *login* ke dalam aplikasi.
+3. **Mekanisme pembangkitan *token* dan *expiry time***: <br>
+*Access token* yang didapatkan dan digunakan pengguna dibangkitkan saat pengguna berhasil melakukan *login* pada aplikasi. String token di-*generate* secara acak sepanjang 10 huruf. String token kemudian diberikan ke klien dalam bentuk *cookie* sehingga token akan disimpan oleh browser klien. Informasi mengenai token juga akan disimpan ke dalam basis data server disertai dengan informasi tambahan, seperti *IP address*, Jenis browser, dan *expiry time*. *Expiry time* token yakni selama 1 jam sejak klien berhasil *login* ke dalam aplikasi.
 
 4. **Kelebihan dan kelemahan arsitektur aplikasi dibandingkan dengan aplikasi monolitik**:
  * Kelebihan:
